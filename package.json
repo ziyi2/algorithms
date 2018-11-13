@@ -1,0 +1,27 @@
+{
+  "name": "algorithms",
+  "version": "1.0.0",
+  "description": "算法",
+  "main": ".cz-config.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "dependencies": {
+    "commitizen": "^3.0.4",
+    "cz-conventional-changelog": "^2.1.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ziyi2/algorithms.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ziyi2/algorithms/issues"
+  },
+  "homepage": "https://github.com/ziyi2/algorithms#readme"
+}
