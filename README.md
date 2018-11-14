@@ -1,5 +1,7 @@
 # 算法导论与javascript实现
 
+>注：在文档中使用Latex对数学公式进行排版，如果想要看到这些公式，建议安装[MathJax Plugin for Github](https://chrome.google.com/webstore/detail/mathjax-plugin-for-github/ioemnmodlmafdkllaclgeombjnmnbima)插件。
+
 ## 算法基础
 主要讲解一个算法设计与分析的框架：说明插入排序算法，证明该算法能正确的排序，并分析其运行时间。讨论完插入排序后，引入用于算法设计的分治法并使用该方法设计归并排序算法，分析其运行时间。分析运行时间引入了记号$ \Theta $，该记号关注时间如何随着将被排序的项目而增加。
 
