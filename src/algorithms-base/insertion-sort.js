@@ -2,7 +2,7 @@
  * @Author: zhuxiankang 
  * @Date:   2018-11-15 08:38:16  
  * @Desc:   插入排序 
- * @Parm:   arr -> 待排序的数组 
+ * @Parm:   {Array} arr 待排序的序列
  */
 function insertionSort(arr) {
   let array = [...arr]
