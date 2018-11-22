@@ -7,3 +7,5 @@
 
 - [插入排序](https://github.com/ziyi2/algorithms-javascript/blob/master/doc/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80/%E6%8F%92%E5%85%A5%E6%8E%92%E5%BA%8F.md) 
 - [归并排序](https://github.com/ziyi2/algorithms-javascript/blob/master/doc/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80/%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F.md)
+
+> 总结：$T(n)$是输入规模为$n$的一个问题的运行时间，如果对于某个常数$c$有$n \le c$，那么求解只需要常量时间，我们记为$\theta(1)$。如果$T(n) = an^2 + bn + c$，那么求解需要时间为$\theta(n^2)$。如果$T(n) = aT({n \over b}) + f(n)$，该递归式求解需要的时间为$\theta(nlgn)$。
