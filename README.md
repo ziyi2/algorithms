@@ -14,6 +14,10 @@
 
 
 
+## 参考文献
+
+- [javascript-algorithms](https://github.com/trekhleb/javascript-algorithms)
+- [CLRS](https://github.com/gzc/CLRS)
 
 
 
