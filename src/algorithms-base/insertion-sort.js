@@ -26,3 +26,31 @@ let arr = [5,2,4,6,1,3]
 let newArr = insertionSort(arr)
 console.log(arr)
 console.log(newArr)
+
+/** 
+ * @Author: zhuxiankang 
+ * @Date:   2018-11-24 15:42:54  
+ * @Desc:   插入排序(降序) 
+ * @Parm:   {Array} arr 待排序的总序列 
+ */
+function insertionReverseSort(arr) {
+  let array = [...arr]
+
+  for(let i=1; i<array.length; i++) {
+    let key = array[i]
+    let j = i - 1
+
+    while(j>=0 && key>array[j]) {
+      array[j + 1] = array[j]
+      j--
+    }
+
+    array[j + 1] = key
+  }
+
+  return array
+}
+
+newArr = insertionReverseSort(arr)
+console.log(arr)
+console.log(newArr)
