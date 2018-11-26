@@ -4,26 +4,20 @@ function addBinary(A, B) {
       BLength = B.length,
       length = ALength > BLength ? ALength : BLength,
       C = new Array(length + 1),
-      J = 0,
-      i,
-      sum
+      carry = 0,
+      sum,
+      i
 
   for(i=0; i<length; i++) {
     A[i] |= 0
     B[i] |= 0
-
-    sum = A[i] + B[i]
-
-    if(sum + J >= 2) {
-      C[i] = 0
-      J = 1
-    } else {
-      C[i] = sum + J
-      J = 0
-    }
+    sum = A[i] + B[i] + carry 
+    C[i] = sum % 2
+    carry = Math.floor(sum / 2)
   }
 
-  C[i+1] = J
+  C[i] = carry
+
   return C
 
 }
