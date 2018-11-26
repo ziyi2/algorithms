@@ -24,8 +24,8 @@ function insertionSort(arr) {
 
 let arr = [5,2,4,6,1,3]
 let newArr = insertionSort(arr)
-console.log(arr)
-console.log(newArr)
+// console.log(arr)
+// console.log(newArr)
 
 /** 
  * @Author: zhuxiankang 
@@ -52,5 +52,5 @@ function insertionReverseSort(arr) {
 }
 
 newArr = insertionReverseSort(arr)
-console.log(arr)
-console.log(newArr)
+// console.log(arr)
+// console.log(newArr)

@@ -63,4 +63,4 @@ function mergeSort(arr, start, end) {
 
 let arr = [38,27,43,3,9,82,10]
 mergeSort(arr, 0, arr.length-1)
-console.log(arr)
+// console.log(arr)
