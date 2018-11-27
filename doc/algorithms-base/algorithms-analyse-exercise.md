@@ -53,6 +53,23 @@ function selectionSort(arr) {
 
 
 #### `问题3`
+***
+
+再次考虑[线性查找问题](https://github.com/ziyi2/algorithms-javascript/blob/master/doc/algorithms-base/insertion-sort-exercise.md#%E9%97%AE%E9%A2%982)，假设要查找的元素等可能地为数组中的任意元素，平均需要检查输入数组的多少元素？最坏情况如何？用$\theta$记号给出平均情况和最坏情况的运行时间。
+
+#### `答案`
+
+**平均情况**：$(n+1) \over2$
+**最坏情况**：$n$ 
+
+由于等可能地为任意元素，因此每个元素是`v`的概率为$1\over n$，那么需要检查的平均情况为
+
+$$ {1\over n} \sum\limits_{i=1}^{n}i = {{n+1} \over 2}$$
+
+因此平均情况运行时间为$\theta(n)$，最坏情况运行时间为$\theta(n)$。
+
+
+#### `问题4`
 
 ***
 

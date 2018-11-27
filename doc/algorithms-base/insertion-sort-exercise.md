@@ -36,6 +36,7 @@ function insertionSort(arr) {
 考虑查找问题：
 
 输入：`n`个数的一个序列`A=[a1,a2,a3,...,an]`和一个值`v`
+
 输出：下标`i`使得`v=A[i]`或者`v`不在`A`中出现时，输出`null`
 
 写出**线性查找**的`javascript`代码。
