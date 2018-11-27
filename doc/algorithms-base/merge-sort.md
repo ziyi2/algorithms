@@ -128,7 +128,11 @@ $$ T(n) = cnlgn + cn  $$
 
 ### 4. 总结
 
-引入用于算法设计的**分治法**并使用该方法设计**归并排序**算法，分析其运行时间。如果$T(n) = aT({n \over b}) + f(n)$，该递归式求解需要的时间为$\theta(nlgn)$。
+引入用于算法设计的**分治法**并使用该方法设计**归并排序**算法，分析其运行时间。如果$T(n) = aT({n \over b}) + f(n)$，该递归式求解需要的时间为$\theta(nlgn)$，同时从下图可以发现，**归并排序**的最差情况运行时间比**插入排序**要小的多。
+
+![插入排序](https://raw.githubusercontent.com/ziyi2/algorithms-javascript/master/img/algorithms-base/insert-merge-sort.png.png)
+
+
 
 
 ### 参考文献
