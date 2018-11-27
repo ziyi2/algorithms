@@ -13,8 +13,8 @@ function insertionSort(arr) {
   let array = [...arr]
 
   for(let i=1; i<array.length; i++) {
-    let key = array[i],
-        j = i - 1
+    let key = array[i]
+    let j = i - 1
 
     while(j>=0 && key>array[j]) {
       array[j + 1] = array[j]
@@ -28,11 +28,36 @@ function insertionSort(arr) {
 }
 ```
 
+
 #### `问题2`
 
 ***
 
-考虑把两个n位二进制整数加起来的问题，这两个整数分别存储在两个n元数组A和B中。这两个整数的和应按二进制形式存储在一个（n + 1）元的数组C中，请给出该问题的形式化描述，并写出`javascript`代码实现。
+考虑查找问题：
+
+输入：`n`个数的一个序列`A=[a1,a2,a3,...,an]`和一个值`v`
+输出：下标`i`使得`v=A[i]`或者`v`不在`A`中出现时，输出`null`
+
+写出**线性查找**的`javascript`代码。
+
+``` javascript
+function linearSearch(A, v) {
+ for(let i=0; i<A.length; i++) {
+   if(A[i] === v) {
+     return i
+   }
+ }
+ return null
+}  
+```
+
+
+
+#### `问题3`
+
+***
+
+考虑把两个`n`位二进制整数加起来的问题，这两个整数分别存储在两个`n`元数组`A`和`B`中。这两个整数的和应按二进制形式存储在一个`（n + 1）`元的数组`C`中，请给出该问题的形式化描述，并写出`javascript`代码实现。
 
 
 #### `答案`
