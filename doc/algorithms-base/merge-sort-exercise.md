@@ -107,3 +107,42 @@ $$ = 2^{k+1}lg 2^{k+1} $$
 ***
 
 把**插入排序**表示为一个递归过程，为了排序`A[1...n]`，我们递归地排序`A[1...n-1]`，然后把`A[n]`插入到已排序的数组`A[1...n-1]`。写出这个递归程序的`javascript`实现，并为这个**插入排序**的递归版本给出一个最坏情况运行时间的递归式。
+
+#### `答案`
+
+``` javascript
+function insertion(arr, length) {
+  let key = arr[length],
+      j = length - 1
+
+  while(j>=0 && key<arr[j]) {
+    arr[j + 1] = arr[j--]
+  }
+
+  arr[j + 1] = key
+} 
+
+function insertionSort(arr, length) {
+  if(length <=0 ) return
+  insertionSort(arr, length - 1)
+  insertion(arr, length)
+}
+```
+
+
+**递归式**：
+
+$$ T(n) = \begin{cases}c & 若n = 1 \\\\ T({ n -1}) +c(n-1)	& 若n > 1 \end{cases}  $$
+
+
+#### `问题4`
+
+***
+
+回顾[线性查找问题](https://github.com/ziyi2/algorithms-javascript/blob/master/doc/algorithms-base/insertion-sort-exercise.md#%E9%97%AE%E9%A2%982)，如果序列`A`已经排好序，就可以将该序列的中点与`v`进行比较。根据比较结果，原序列中有一半就可以不用再做进一步的考虑了。**二分查找**算法重复这个过程，每次都将序列剩余部分的规模减半。为**二分查找**写出迭代或递归的`javscript`代码。证明：二分查找的最坏情况运行时间为$\theta(lgn)$。
+
+
+
+
+
+
