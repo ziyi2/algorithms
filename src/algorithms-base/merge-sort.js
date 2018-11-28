@@ -33,13 +33,7 @@ function merge(arr, leftStart, leftEnd, rightEnd) {
   j = 0
 
   for(let k=leftStart; k<=rightEnd; k++) {
-    if(lefts[i] <= rights[j]) {
-      arr[k] = lefts[i]
-      i++
-    } else {
-      arr[k] = rights[j]
-      j++
-    }
+    arr[k] = lefts[i] <= rights[j] ? lefts[i++] : rights[j++]
   }
 }
 

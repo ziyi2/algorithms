@@ -13,8 +13,7 @@ function insertionSort(arr) {
     i = j - 1
     // 待插入的数据小于当前数据，则当前数据往后移
     while(i >= 0 && array[i] > key) {
-      array[i + 1] = array[i]
-      -- i
+      array[i + 1] = array[i--]
     }
     // 将待插入数据插入合适位置
     array[i + 1] = key
@@ -41,8 +40,7 @@ function insertionReverseSort(arr) {
     let j = i - 1
 
     while(j>=0 && key>array[j]) {
-      array[j + 1] = array[j]
-      j--
+      array[j + 1] = array[j--]
     }
 
     array[j + 1] = key

@@ -49,14 +49,8 @@ function merge(arr, leftStart, leftEnd, rightEnd) {
   j = 0
 
   // 将左右子数组中的元素按从小到大重新插入数组arr
-  for(let k=leftStart; k<=rightEnd; k++) {
-    if(lefts[i] <= rights[j]) {
-      arr[k] = lefts[i]
-      i++
-    } else {
-      arr[k] = rights[j]
-      j++
-    }
+   for(let k=leftStart; k<=rightEnd; k++) {
+    arr[k] = lefts[i] <= rights[j] ? lefts[i++] : rights[j++]
   }
 }
 ```

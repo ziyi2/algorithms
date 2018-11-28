@@ -25,22 +25,32 @@
   j = 0
 
   for(let k = leftStart; k<=rightEnd; k++) {
+    // 无精简
+    // if(i === lefts.length) {
+    //   arr[k] = rights[j++]
+    // } else if(j === rights.length) {
+    //   arr[k] = lefts[i++]
+    // } else {
+    //   arr[k] = lefts[i] <= rights[j] ? lefts[i++] : rights[j++]
+    // }
 
-    if(i === lefts.length - 1) {
-      arr[k] = rights[j]
-      j++
-    } else if(j === rights.length - 1) {
-      arr[k] = lefts[i]
-      i++
-    } else {
-      if(lefts[i] < rights[j]) {
-        arr[k] = lefts[i]
-        i++ 
-      } else {
-        arr[k] = rights[j]
-        j++ 
-      }
-    }
+    // 精简1
+    // if(j === rights.length) {
+    //   arr[k] = lefts[i++]
+    // } else {
+    //   // undefined < 或 > 任意值都是false
+    //   // 如果 i === lefts.length
+    //   // 即lefts[i] = undefined，那么会走else
+    //   arr[k] = lefts[i] <= rights[j] ? lefts[i++] : rights[j++]
+    // }
+
+    // 精简2
+    // if(j === rights.length || lefts[i] <= rights[j]) {
+    //   arr[k] = lefts[i++]
+    // } else {
+    //   arr[k] = rights[j++]
+    // }
+    arr[k] = j === rights.length || lefts[i] <= rights[j] ? lefts[i++] : rights[j++]
   }
  }
 
@@ -54,5 +64,6 @@
   }
  }
 
-let arr = [38,27,43,3,9,82,10]
+let arr = [38,27,43,3,9,10,5555,33,11,1,2,3,4,5,6,7,8,9,8,7,6,5,4,3,2,1]
 mergeSort(arr, 0, arr.length-1)
+console.log(arr)
