@@ -10,24 +10,83 @@
  */
 
 
-
-function binSearch(arr, v, start, end) {
+/** 
+ * @Author: zhuxiankang 
+ * @Date:   2018-11-29 08:53:40  
+ * @Desc:   递归1
+ * @Parm:    
+ */
+function binRecursionSearch1(arr, v, start, end) {
   let middle = Math.floor((start + end)/2)
 
-  if(!arr[middle]) {
+  if(end === 0 || start === arr.length - 1) {
     return -1
   }
 
   if(arr[middle] === v) {
     return middle
   } else if(arr[middle] > v) {
-    binSearch(arr, v, start, middle)
+    return binRecursionSearch(arr, v, start, middle)
   } else {
-    binSearch(arr, v, middle, end)
+    return binRecursionSearch(arr, v, middle, end)
   }
-
 }
 
 
-let arr = [1,2,3,4,5,6,7,8]
-console.log(binSearch(arr, 6, 0, arr.length-1))
+let arr = [1,2,3,4,5,6,7,8,9,10]
+console.log(binRecursionSearch(arr, 11, 0, arr.length))
+
+/** 
+ * @Author: zhuxiankang 
+ * @Date:   2018-11-29 09:14:34  
+ * @Desc:   递归二 
+ * @Parm:    
+ */
+
+function binRecursionSearch1(arr, v, start, end) {
+  let middle = Math.floor((start + end)/2)
+
+  if(arr[middle] === v) {
+    return middle
+  } else if(start >= end) {
+    return -1
+  } else if(arr[middle] > v) {
+    return binRecursionSearch(arr, v, start, middle - 1)
+  } else {
+    return binRecursionSearch(arr, v, middle + 1, end)
+  }
+}
+
+
+
+
+
+/** 
+ * @Author: zhuxiankang 
+ * @Date:   2018-11-29 08:53:58  
+ * @Desc:   迭代 
+ * @Parm:    
+ */
+function binIterationSearch(arr, v) {
+
+  let start = 0,
+      end = arr.length -1,
+      middle
+
+  while(start <= end) {
+    middle = Math.floor((start + end) / 2)
+    
+    if(arr[middle] === v) {
+      return middle
+    } else if(arr[middle] > v) {
+      end = middle - 1
+    } else if(arr[middle] < v) {
+      start = middle + 1
+    }
+  }
+
+  return -1
+}
+
+
+console.log(binIterationSearch(arr, 1))

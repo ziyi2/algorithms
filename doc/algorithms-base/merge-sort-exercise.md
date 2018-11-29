@@ -141,6 +141,98 @@ $$ T(n) = \begin{cases}c & 若n = 1 \\\\ T({ n -1}) +c(n-1)	& 若n > 1 \end{case
 
 回顾[线性查找问题](https://github.com/ziyi2/algorithms-javascript/blob/master/doc/algorithms-base/insertion-sort-exercise.md#%E9%97%AE%E9%A2%982)，如果序列`A`已经排好序，就可以将该序列的中点与`v`进行比较。根据比较结果，原序列中有一半就可以不用再做进一步的考虑了。**二分查找**算法重复这个过程，每次都将序列剩余部分的规模减半。为**二分查找**写出迭代或递归的`javscript`代码。证明：二分查找的最坏情况运行时间为$\theta(lgn)$。
 
+#### `答案`
+
+**递归一**：
+
+``` javascript
+function binRecursionSearch(arr, v, start, end) {
+  let middle = Math.floor((start + end)/2)
+
+  if(end === 0 || start === arr.length - 1) {
+    return -1
+  }
+
+  if(arr[middle] === v) {
+    return middle
+  } else if(arr[middle] > v) {
+    return binRecursionSearch(arr, v, start, middle)
+  } else {
+    return binRecursionSearch(arr, v, middle, end)
+  }
+}
+
+let arr = [1,2,3,4,5,6,7,8,9,10]
+binRecursionSearch(arr, 11, 0, arr.length)
+```
+
+**递归二**：
+
+``` javascript
+function binRecursionSearch1(arr, v, start, end) {
+  let middle = Math.floor((start + end)/2)
+
+  if(arr[middle] === v) {
+    return middle
+  } else if(start >= end) {
+    return -1
+  } else if(arr[middle] > v) {
+    return binRecursionSearch(arr, v, start, middle - 1)
+  } else {
+    return binRecursionSearch(arr, v, middle + 1, end)
+  }
+}
+
+let arr = [1,2,3,4,5,6,7,8,9,10]
+
+// 最后传入的参数不同
+binRecursionSearch(arr, 11, 0, arr.length -1)
+```
+
+**迭代**：
+
+``` javascript
+function binIterationSearch(arr, v) {
+
+  let start = 0,
+      end = arr.length -1,
+      middle
+
+  // 这里也可以将start === end单独拿出来处理
+  while(start <= end) {
+    middle = Math.floor((start + end) / 2)
+    
+    if(arr[middle] === v) {
+      return middle
+    } else if(arr[middle] > v) {
+      end = middle - 1
+    } else if(arr[middle] < v) {
+      start = middle + 1
+    }
+  }
+
+  return -1
+}
+```
+
+
+证明：二分查找的最坏情况运行时间为$\theta(lgn)$：
+
+这里我们以**递归式一**(自己写的代码，如有不妥请随意指出)为例，来说明二分查找的最差情况运行时间，首先[分治法](https://github.com/ziyi2/algorithms-javascript/blob/master/doc/algorithms-base/merge-sort.md#31-%E5%88%86%E6%B2%BB%E7%AE%97%E6%B3%95%E7%9A%84%E5%88%86%E6%9E%90)的默认**递归式**如下：
+
+$$ T(n) = \begin{cases}\theta(1) & 若n \le c  \\\\ aT({ n \over b }) + D(n) + C(n)	& 其他			\end{cases}  $$
+
+在**二分法**中，分解问题是计算数组的中间位置，因此$D(n)=\theta(1)$，解决子问题需要$T({n \over 2})$的运行代价，这里不需要做合并操作，因此$C(n)=0$，因此**递归式**如下：
+
+
+$$ T(n) = \begin{cases}c & 若n = 1  \\\\ T({ n \over 2 }) + c	& 若n > 1			\end{cases}  $$
+
+在[归并排序](https://github.com/ziyi2/algorithms-javascript/blob/master/doc/algorithms-base/merge-sort.md#31-%E5%88%86%E6%B2%BB%E7%AE%97%E6%B3%95%E7%9A%84%E5%88%86%E6%9E%90)中我们已经清楚将问题一分为二需要分解$lgn$次子问题，每次解决子问题的代价是c，那么加上顶层的代价，总代价为：
+
+$$T(n) = clgn + c$$
+
+因此**二分法**的运行时间为$\theta(lgn)$。
+
 
 
 
