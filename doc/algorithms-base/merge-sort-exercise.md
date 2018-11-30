@@ -218,7 +218,7 @@ function binIterationSearch(arr, v) {
 
 证明：二分查找的最坏情况运行时间为$\theta(lgn)$：
 
-这里我们以**递归式一**(自己写的代码，如有不妥请随意指出)为例，来说明二分查找的最差情况运行时间，首先[分治法](https://github.com/ziyi2/algorithms-javascript/blob/master/doc/algorithms-base/merge-sort.md#31-%E5%88%86%E6%B2%BB%E7%AE%97%E6%B3%95%E7%9A%84%E5%88%86%E6%9E%90)的默认**递归式**如下：
+这里我们以**递归式一**(自己写的代码，如有不妥请随意指出)为例，来说明二分查找的最坏情况运行时间，首先[分治法](https://github.com/ziyi2/algorithms-javascript/blob/master/doc/algorithms-base/merge-sort.md#31-%E5%88%86%E6%B2%BB%E7%AE%97%E6%B3%95%E7%9A%84%E5%88%86%E6%9E%90)的默认**递归式**如下：
 
 $$ T(n) = \begin{cases}\theta(1) & 若n \le c  \\\\ aT({ n \over b }) + D(n) + C(n)	& 其他			\end{cases}  $$
 
