@@ -235,6 +235,41 @@ $$T(n) = clgn + c$$
 
 
 
+#### `问题5`
 
+***
+
+[插入排序](https://github.com/ziyi2/algorithms-javascript/blob/master/doc/algorithms-base/insertion-sort.md#1-%E7%AE%97%E6%B3%95%E8%AF%B4%E6%98%8E)的最坏情况的[运行时间分析](https://github.com/ziyi2/algorithms-javascript/blob/master/doc/algorithms-base/algorithms-analyse.md#3-%E5%A2%9E%E9%95%BF%E9%87%8F%E7%BA%A7)是$\theta(n^2)$，其中寻找插入位置采用如下代码中第6行的`while`循环反向线性查找已排好序的数组`array[1...j-1]`，如果要对改算法进行优化，我们可以采用[问题4](https://github.com/ziyi2/algorithms-javascript/blob/master/doc/algorithms-base/merge-sort-exercise.md#%E9%97%AE%E9%A2%984)的**二分查找**来优化这个线性查找的过程，写出`javascript`代码的实现，并求出该算法的最坏运行时间。
+
+
+``` javascript
+function insertionSort(arr) {
+  // 1
+  let array = [...arr] 
+  // 2
+  let key, i
+  // 3
+  for(let j = 1; j <= array.length - 1; ++j) {
+    // 4
+    key = array[j]
+    // 5
+    i = j - 1
+    // 6
+    while(i >= 0 && array[i] > key) {
+      // 7
+      array[i + 1] = array[i]
+      // 8
+      -- i
+    }
+    // 9
+    array[i + 1] = key
+  }
+  // 10
+  return array
+}
+```
+
+
+#### `答案`
 
 
