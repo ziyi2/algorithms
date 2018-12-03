@@ -239,7 +239,7 @@ $$T(n) = clgn + c$$
 
 ***
 
-[插入排序](https://github.com/ziyi2/algorithms-javascript/blob/master/doc/algorithms-base/insertion-sort.md#1-%E7%AE%97%E6%B3%95%E8%AF%B4%E6%98%8E)的最坏情况的[运行时间分析](https://github.com/ziyi2/algorithms-javascript/blob/master/doc/algorithms-base/algorithms-analyse.md#3-%E5%A2%9E%E9%95%BF%E9%87%8F%E7%BA%A7)是$\theta(n^2)$，其中寻找插入位置采用如下代码中第6行的`while`循环反向线性查找已排好序的数组`array[1...j-1]`，如果要对改算法进行优化，我们可以采用[问题4](https://github.com/ziyi2/algorithms-javascript/blob/master/doc/algorithms-base/merge-sort-exercise.md#%E9%97%AE%E9%A2%984)的**二分查找**来优化这个线性查找的过程，写出`javascript`代码的实现，并求出该算法的最坏运行时间。
+[插入排序](https://github.com/ziyi2/algorithms-javascript/blob/master/doc/algorithms-base/insertion-sort.md#1-%E7%AE%97%E6%B3%95%E8%AF%B4%E6%98%8E)的最坏情况的[运行时间分析](https://github.com/ziyi2/algorithms-javascript/blob/master/doc/algorithms-base/algorithms-analyse.md#3-%E5%A2%9E%E9%95%BF%E9%87%8F%E7%BA%A7)是$\theta(n^2)$，其中寻找插入位置采用如下代码中第6行的`while`循环反向线性查找已排好序的数组`array[1...j-1]`，如果要对改算法进行优化，请问我们可以采用[问题4](https://github.com/ziyi2/algorithms-javascript/blob/master/doc/algorithms-base/merge-sort-exercise.md#%E9%97%AE%E9%A2%984)的**二分查找**来优化这个线性查找的过程吗？如果可以写出`javascript`代码的实现。试问是否可以将算法的运行时间从$\theta(n^2)$优化到$\theta(nlgn)$?
 
 
 ``` javascript
@@ -272,4 +272,58 @@ function insertionSort(arr) {
 
 #### `答案`
 
+不可以优化。因为就算查找到了需要待插入的元素（虽然查找确实达到了对数级），仍然需要一步步将之后的元素往后移动才能进行插入操作。
 
+``` javascript
+ function binarySearch(arr, start, end, v) {
+
+   let  mid
+
+   if(arr[end - 1] <= v) {
+     return end - 1
+   }
+
+   while(start <= end) {
+      mid = Math.floor((start + end)/2)
+
+      // 需要查找的不是一个精确的值，而是一个区间了
+      if(arr[mid] >= v && arr[mid - 1] < v) {
+        return mid
+      } else if(arr[mid] > v) {
+        return binarySearch(arr, start, mid, v)
+      } else {
+        return binarySearch(arr, mid, end, v)
+      }
+    }
+
+   return -1
+ }
+
+
+
+ function insertionSort(arr) {
+    let array = [...arr],
+        key,
+        j,
+        temp
+
+
+    // 默认数组元素0排好序
+    for(let i=1; i<array.length; i++) {
+
+      key = array[i]
+      j = i - 1
+
+      // 二分查找
+      j = binarySearch(array, 0, j, key)
+
+      temp = array[j]
+
+      // 就算查到需要插入的位置仍然需要将该位置后面的元素后移
+      // 省略...
+    }
+
+    return array
+ }
+
+```
