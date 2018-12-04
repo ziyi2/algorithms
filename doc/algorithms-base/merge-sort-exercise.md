@@ -341,8 +341,8 @@ function insertionSort(arr) {
 
 结合**归并排序**和**二分查找**：
 
-- 1. 对集合`S`进行排序
-- 2. 遍历集合`S`，对于每一个遍历序列`i`计算差值`y=x - S[i]`，并在集合中使用二分查找除`S[i]`之外的元素是否存在`y`，如果存在则返回`true`
-- 3. 如果遍历完集合`S`仍然没有找到元素`y`，这返回`false`
+- 1.对集合`S`进行排序
+- 2.遍历集合`S`，对于每一个遍历序列`i`计算差值`y=x - S[i]`，并在集合中使用二分查找除`S[i]`之外的元素是否存在`y`，如果存在则返回`true`
+- 3.如果遍历完集合`S`仍然没有找到元素`y`，这返回`false`
 
 > 第1步**归并排序**的算法运行时间为$\theta(nlgn)$，第2步集合的遍历算法的运行时间为$\theta(n)$，每一次遍历**二分查找**的运行时间为$\theta(lgn)$(具体查看[问题4](https://github.com/ziyi2/algorithms-javascript/blob/master/doc/algorithms-base/merge-sort-exercise.md#%E9%97%AE%E9%A2%984)的证明)，因此第二步总的运行时间仍为$\theta(nlgn)$。
