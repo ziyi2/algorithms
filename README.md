@@ -10,7 +10,7 @@
 - [分析算法习题](https://github.com/ziyi2/algorithms-javascript/blob/master/doc/algorithms-base/algorithms-analyse-exercise.md) 
 - [归并排序](https://github.com/ziyi2/algorithms-javascript/blob/master/doc/algorithms-base/merge-sort.md)
 - [归并排序习题](https://github.com/ziyi2/algorithms-javascript/blob/master/doc/algorithms-base/merge-sort-exercise.md)
-
+- [算法基础思考题](https://github.com/ziyi2/algorithms-javascript/blob/master/doc/algorithms-base/algorithms-base-exercise.md)
 
 
 ## 算法渐进分析
