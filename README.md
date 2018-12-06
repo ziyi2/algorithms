@@ -12,9 +12,9 @@
 - [归并排序习题](https://github.com/ziyi2/algorithms-javascript/blob/master/doc/algorithms-base/merge-sort-exercise.md)
 
 
-## 算法渐进分析
+## 函数的增长
 
-- [渐进标记]()
+- [渐进标记](https://github.com/ziyi2/algorithms-javascript/blob/master/doc/function-growth/asymptotic-symbol.md)
 - [标准记号]()
 
 ## 参考文献
