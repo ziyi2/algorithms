@@ -139,7 +139,7 @@ $$ T(n) = \begin{cases}c & 若n = 1 \\\\ T({ n -1}) +c(n-1)	& 若n > 1 \end{case
 
 ***
 
-回顾[线性查找问题](https://github.com/ziyi2/algorithms-javascript/blob/master/doc/algorithms-base/insertion-sort-exercise.md#%E9%97%AE%E9%A2%982)，如果序列`A`已经排好序，就可以将该序列的中点与`v`进行比较。根据比较结果，原序列中有一半就可以不用再做进一步的考虑了。**二分查找**算法重复这个过程，每次都将序列剩余部分的规模减半。为**二分查找**写出迭代或递归的`javscript`代码。证明：二分查找的最坏情况运行时间为$\theta(lgn)$。
+回顾[线性查找问题](https://github.com/ziyi2/algorithms-javascript/blob/master/doc/algorithms-base/insertion-sort-exercise.md#%E9%97%AE%E9%A2%982)，如果序列`A`已经排好序，就可以将该序列的中点与`v`进行比较。根据比较结果，原序列中有一半就可以不用再做进一步的考虑了。**二分查找**算法重复这个过程，每次都将序列剩余部分的规模减半。为**二分查找**写出迭代或递归的`javscript`代码。证明：二分查找的最坏情况运行时间为$\Theta(lgn)$。
 
 #### `答案`
 
@@ -216,13 +216,13 @@ function binIterationSearch(arr, v) {
 ```
 
 
-证明：二分查找的最坏情况运行时间为$\theta(lgn)$：
+证明：二分查找的最坏情况运行时间为$\Theta(lgn)$：
 
 这里我们以**递归式一**(自己写的代码，如有不妥请随意指出)为例，来说明二分查找的最坏情况运行时间，首先[分治法](https://github.com/ziyi2/algorithms-javascript/blob/master/doc/algorithms-base/merge-sort.md#31-%E5%88%86%E6%B2%BB%E7%AE%97%E6%B3%95%E7%9A%84%E5%88%86%E6%9E%90)的默认**递归式**如下：
 
-$$ T(n) = \begin{cases}\theta(1) & 若n \le c  \\\\ aT({ n \over b }) + D(n) + C(n)	& 其他			\end{cases}  $$
+$$ T(n) = \begin{cases}\Theta(1) & 若n \le c  \\\\ aT({ n \over b }) + D(n) + C(n)	& 其他			\end{cases}  $$
 
-在**二分法**中，分解问题是计算数组的中间位置，因此$D(n)=\theta(1)$，解决子问题需要$T({n \over 2})$的运行代价，这里不需要做合并操作，因此$C(n)=0$，因此**递归式**如下：
+在**二分法**中，分解问题是计算数组的中间位置，因此$D(n)=\Theta(1)$，解决子问题需要$T({n \over 2})$的运行代价，这里不需要做合并操作，因此$C(n)=0$，因此**递归式**如下：
 
 
 $$ T(n) = \begin{cases}c & 若n = 1  \\\\ T({ n \over 2 }) + c	& 若n > 1			\end{cases}  $$
@@ -231,7 +231,7 @@ $$ T(n) = \begin{cases}c & 若n = 1  \\\\ T({ n \over 2 }) + c	& 若n > 1			\end
 
 $$T(n) = clgn + c$$
 
-因此**二分法**的运行时间为$\theta(lgn)$。
+因此**二分法**的运行时间为$\Theta(lgn)$。
 
 
 
@@ -239,7 +239,7 @@ $$T(n) = clgn + c$$
 
 ***
 
-[插入排序](https://github.com/ziyi2/algorithms-javascript/blob/master/doc/algorithms-base/insertion-sort.md#1-%E7%AE%97%E6%B3%95%E8%AF%B4%E6%98%8E)的最坏情况的[运行时间分析](https://github.com/ziyi2/algorithms-javascript/blob/master/doc/algorithms-base/algorithms-analyse.md#3-%E5%A2%9E%E9%95%BF%E9%87%8F%E7%BA%A7)是$\theta(n^2)$，其中寻找插入位置采用如下代码中第6行的`while`循环反向线性查找已排好序的数组`array[1...j-1]`，如果要对改算法进行优化，请问我们可以采用[问题4](https://github.com/ziyi2/algorithms-javascript/blob/master/doc/algorithms-base/merge-sort-exercise.md#%E9%97%AE%E9%A2%984)的**二分查找**来优化这个线性查找的过程吗？如果可以写出`javascript`代码的实现。试问是否可以将算法的运行时间从$\theta(n^2)$优化到$\theta(nlgn)$?
+[插入排序](https://github.com/ziyi2/algorithms-javascript/blob/master/doc/algorithms-base/insertion-sort.md#1-%E7%AE%97%E6%B3%95%E8%AF%B4%E6%98%8E)的最坏情况的[运行时间分析](https://github.com/ziyi2/algorithms-javascript/blob/master/doc/algorithms-base/algorithms-analyse.md#3-%E5%A2%9E%E9%95%BF%E9%87%8F%E7%BA%A7)是$\Theta(n^2)$，其中寻找插入位置采用如下代码中第6行的`while`循环反向线性查找已排好序的数组`array[1...j-1]`，如果要对改算法进行优化，请问我们可以采用[问题4](https://github.com/ziyi2/algorithms-javascript/blob/master/doc/algorithms-base/merge-sort-exercise.md#%E9%97%AE%E9%A2%984)的**二分查找**来优化这个线性查找的过程吗？如果可以写出`javascript`代码的实现。试问是否可以将算法的运行时间从$\Theta(n^2)$优化到$\Theta(nlgn)$?
 
 
 ``` javascript
@@ -333,7 +333,7 @@ function insertionSort(arr) {
 
 ***
 
-描述一个运行时间为$\theta(nlgn)$的算法，给定`n`个整数的集合`S`和另一个整数`x`，该算法能确定`S`中是否存在两个其和刚好为`x`的元素。
+描述一个运行时间为$\Theta(nlgn)$的算法，给定`n`个整数的集合`S`和另一个整数`x`，该算法能确定`S`中是否存在两个其和刚好为`x`的元素。
 
 
 
@@ -345,4 +345,4 @@ function insertionSort(arr) {
 - 2.遍历集合`S`，对于每一个遍历序列`i`计算差值`y=x - S[i]`，并在集合中使用二分查找除`S[i]`之外的元素是否存在`y`，如果存在则返回`true`
 - 3.如果遍历完集合`S`仍然没有找到元素`y`，这返回`false`
 
-> 第1步**归并排序**的算法运行时间为$\theta(nlgn)$，第2步集合的遍历算法的运行时间为$\theta(n)$，每一次遍历**二分查找**的运行时间为$\theta(lgn)$(具体查看[问题4](https://github.com/ziyi2/algorithms-javascript/blob/master/doc/algorithms-base/merge-sort-exercise.md#%E9%97%AE%E9%A2%984)的证明)，因此第二步总的运行时间仍为$\theta(nlgn)$。
+> 第1步**归并排序**的算法运行时间为$\Theta(nlgn)$，第2步集合的遍历算法的运行时间为$\Theta(n)$，每一次遍历**二分查找**的运行时间为$\Theta(lgn)$(具体查看[问题4](https://github.com/ziyi2/algorithms-javascript/blob/master/doc/algorithms-base/merge-sort-exercise.md#%E9%97%AE%E9%A2%984)的证明)，因此第二步总的运行时间仍为$\Theta(nlgn)$。
