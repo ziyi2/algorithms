@@ -16,7 +16,7 @@
 
 - [渐进标记](https://github.com/ziyi2/algorithms-javascript/blob/master/doc/function-growth/asymptotic-symbol.md)
 - [渐进标记习题](https://github.com/ziyi2/algorithms-javascript/blob/master/doc/function-growth/asymptotic-symbol-exercise.md)
-- [标准记号]()
+- [常用函数]()
 
 ## 参考文献
 
