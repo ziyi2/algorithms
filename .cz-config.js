@@ -16,6 +16,7 @@ module.exports = {
   ],
 
   scopes: [
+    {name: '项目框架'},
     {name: '算法基础'}
   ],
 
