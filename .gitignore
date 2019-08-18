@@ -6,3 +6,6 @@ coverage
 
 # vuepress
 docs/.vuepress/dist
+
+# babel
+lib
