@@ -1,25 +1,34 @@
 # 介绍
 
-**Algorithms**是基于《算法导论》衍生的一个Web前端学习文档。《算法导论》对于一些没有数学基础或者已经忘了数学知识的开发者而言学习相对困难，作者希望能简化《算法导论》的一些理论知识，使的算法学习变得更加简单。在学习文档中，作者会使用JavaScript实现书中的一些算法，同时也会衍生一些书中没有的知识点，并寻找相应的面试题加以实践和说明。希望算法的学习不仅可以提升我们的编程能力，同时也有助于我们在各种面试中脱颖而出。
-
-## 章节目录
-
-文档的章节设计将按照《算法导论》的章节内容进行设计，包括第一部分**基础知识**、第二部分**排序和顺序统计量**、第三部分**数据结构**、第四部分**高级设计和分析技术**、第五部分**高级数据结构**、第六部分**图算法**以及第七部分**算法问题选编**，同时在此过程中可能会将**数学基础知识**穿插到各个需要解释的章节中。
-
-### 基础知识
-
-第一章：算法基础
-
-[1.1 插入排序](/basic/insertion)
-
-第二章：函数的增长
-
-第三章：分治策略
-
-第四章：概率分析和随机算法
+[I-Algorithms](https://github.com/ziyi2/algorithms)是基于《算法导论》衍生的一个Web前端学习文档。《算法导论》对于一些没有数学基础或者已经忘了数学知识的开发者而言学习相对困难，作者希望能简化《算法导论》的一些理论知识，使的算法学习变得更加简单。在学习文档中，作者会使用JavaScript实现书中的一些算法，同时也会衍生一些书中没有的知识点，并寻找相应的面试题加以实践和说明。希望算法的学习不仅可以提升我们的编程能力，同时也有助于我们在各种面试中脱颖而出。
 
 
-## 由来
+## :memo: 学习文档
+
+I-Algorithms学习文档的章节设计将按照《算法导论》的章节内容进行设计，包括
+
+
+- **[基础知识](/basic/insertion)**
+- **排序和顺序统计量**
+- **数据结构**
+- **高级设计和分析技术**
+- **高级数据结构**
+- **图算法**
+- **算法问题选编**
+
+同时会将**数学基础知识**穿插到各个需要解释的章节中，关于各个章节的细节内容具体可查看[章节目录](/guide/chapter)。
+
+## :package: 库包
+
+I-Algorithms的JavaScript实现封装成了npm库包供开发者使用，如果你想尝试使用其中的一些算法API，可以查看[安装和使用](/guide/install)。
+
+
+## :busts_in_silhouette: 维护
+
+如果你觉得作者写的代码有Bug、不规范或者不优雅，想自己在作者的基础上进行修改或者给作者提Pull Request，可以查看[如何使用该仓库](/guide/repo)和[Pull Request](/guide/pull)。
+
+
+## :bulb: 由来
 
 随着Web前端的发展，作者越来越感受到前端职业带来的冲击，底层建设越来越封闭，上层建设越来越繁荣。很多Web前端开发工程师连基本的计算机专业知识都不清楚的情况下（包括作者本人），依然可以在烦躁的行业中获得不错的工作待遇。
 
@@ -30,22 +39,7 @@
 作者虽然是一名Web前端开发工程师，但是对于计算机专业知识的掌握非常薄弱，希望自己能慢慢往下沉淀，算法学习是作者鼓足勇气迈出的第一步，希望越来越多的人能加入作者的学习行列。 
 
 
-
-
-## Pull Request
-
-作者写出的JavaScript代码如果有可优化的空间，希望大家可以指正，可以通过提[issues](https://github.com/ziyi2/algorithms-javascript/issues)的形式告知，也可以通过pull request的形式，作者会对代码进行review，如果通过会合并大家的代码，也可能告诉大家为什么不能接受这样的修改，并最终关闭它。
-
-在提交一个pull request之前，请确认你按照以下的步骤来做：
-
-- 1. Fork the repository：[algorithms-javascript](https://github.com/ziyi2/algorithms-javascript)
-- 2. 基于dev分支进行修改
-- 3. 使用符合cz的commit，并且尽量清楚的进行描述
-- 4. 更新源码的同时更新相应的说明文档
-- 5. 确保你的代码通过了Eslint校验
-
-
-## 参考
+## :book: 参考
 
 - [javascript-algorithms](https://github.com/trekhleb/javascript-algorithms) - Algorithms and data structures implemented in JavaScript with explanations and links to further readings
 - [CLRS](https://github.com/gzc/CLRS) - Solutions to Introduction to Algorithms

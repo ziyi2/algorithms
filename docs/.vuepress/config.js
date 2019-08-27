@@ -5,8 +5,8 @@ var path = require('path');
 module.exports = {
   base: '/algorithms/',
   port: '8080',
-  title: 'Algorithms',
-  description: '算法导论与JavaScript实现',
+  title: 'I-Algorithms',
+  description: 'Introduction To Algorithms With JavaScript.',
 
   head: [
     ['link', { rel: 'icon', href: `/favicon.ico` }]

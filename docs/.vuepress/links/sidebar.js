@@ -1,15 +1,33 @@
 module.exports = {
-  '/basic': [{
-    title: '算法基础',
+  '/guide': [{
+    title: '指南',
     collapsable: false,
     children: [
-      '/basic/insertion'
+      '/guide/introduction',
+      '/guide/chapter',
+      '/guide/install',
+      '/guide/repo',
+      '/guide/pull'
     ]
-  }, {
-    title: '函数的增长',
+  }],
+  '/api': [{
+    title: 'API文档',
     collapsable: false,
     children: [
-      '/basic/insertion'
+      '/api/_comparator',
+      '/api/sort',
+    ]
+  }],
+  '/basic': [{
+    title: '基础知识',
+    collapsable: false,
+    children: [
+      '/basic/insertion',
+      '/basic/insertion-exercise',
+      '/basic/analyse',
+      '/basic/analyse-exercise',
+      '/basic/merge',
+      '/basic/merge-exercise'
     ]
   }]
 }

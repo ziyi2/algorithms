@@ -1,6 +1,9 @@
 module.exports = [{
-  text: '介绍',
+  text: '指南',
   link: '/guide/introduction'
+}, {
+  text: 'API',
+  link: '/api/_comparator'
 }, {
   text: '基础知识',
   link: '/basic/insertion'
@@ -10,9 +13,6 @@ module.exports = [{
 }, {
   text: '数据结构',
   link: '/data-structure'
-}, {
-  text: '习题',
-  link: '/exercise/basic/insertion'
 }, {
   text: 'GitHub',
   link: 'https://github.com/ziyi2/algorithms-javascript'

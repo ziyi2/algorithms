@@ -22,7 +22,7 @@ module.exports = {
   coveragePathIgnorePatterns: ['<rootDir>/node_modules/'],
 
   // The pattern Jest uses to detect test files.
-  testRegex: '/__tests__/.*\\.(test|spec)\\.jsx?$',
+  testMatch: ['**/__tests__/**/*.test.[jt]s?(x)'],
 
   // This option sets the URL for the jsdom environment.
   // It is reflected in properties such as location.href.
