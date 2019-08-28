@@ -19,7 +19,7 @@ module.exports = {
     ]
   }],
   '/basic': [{
-    title: '基础知识',
+    title: '算法基础',
     collapsable: false,
     children: [
       '/basic/insertion',
@@ -28,6 +28,15 @@ module.exports = {
       '/basic/analyse-exercise',
       '/basic/merge',
       '/basic/merge-exercise'
+    ]
+  },{
+    title: '函数的增长',
+    collapsable: false,
+    children: [
+      '/basic/symbol',
+      '/basic/symbol-exercise',
+      '/basic/common',
+      '/basic/common-exercise'
     ]
   }]
 }
