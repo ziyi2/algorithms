@@ -1,6 +1,6 @@
 {
   "name": "i-algorithms",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Introduction To Algorithms With JavaScript.",
   "main": "lib",
   "repository": {
@@ -15,7 +15,8 @@
     "build": "rimraf lib && node bin/build",
     "deploy": "gh-pages -d docs/.vuepress/dist",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0",
-    "coveralls": "cat ./coverage/lcov.info | coveralls && rm -rf ./coverage"
+    "coveralls": "cat ./coverage/lcov.info | coveralls && rm -rf ./coverage",
+    "lint-md": "remark ."
   },
   "files": [
     "lib"
@@ -50,17 +51,16 @@
     "lint-staged": "^9.2.1",
     "markdown-it": "^9.1.0",
     "prettier-eslint": "^9.0.0",
+    "remark-lint": "^6.0.5",
     "rimraf": "^2.6.3",
     "vuepress": "^1.0.3",
     "vuepress-plugin-cat": "^1.0.3",
-    "vuepress-plugin-mathjax": "^1.2.8"
+    "vuepress-plugin-mathjax": "^1.2.8",
+    "gh-pages": "^2.1.1"
   },
   "config": {
     "commitizen": {
       "path": "node_modules/cz-customizable"
     }
-  },
-  "dependencies": {
-    "gh-pages": "^2.1.1"
   }
 }
