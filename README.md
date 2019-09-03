@@ -12,6 +12,8 @@ I-Algorithms是基于《算法导论》衍生的一个Web前端学习文档。�
 
 ## 文档
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/4b3354220ef64ae2807ac05aa66350f1)](https://app.codacy.com/app/ziyi2/algorithms?utm_source=github.com&utm_medium=referral&utm_content=ziyi2/algorithms&utm_campaign=Badge_Grade_Dashboard)
+
 文档地址：[I-Algorithms](https://ziyi2.github.io/algorithms/)
 
 ## 特性
