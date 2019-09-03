@@ -1,0 +1,13 @@
+language: node_js
+node_js:
+  - 8
+branchs:
+  only:
+    - dev
+cache:
+  directories:
+    - node_modules
+install:
+  - npm install
+script:
+ - npm test
