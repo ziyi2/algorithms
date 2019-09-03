@@ -1,4 +1,11 @@
+
 <h2 align="center">Algorithms</h2>
+
+<h2 align="center">
+  <a href="https://www.travis-ci.org/ziyi2/algorithms/builds" target="_blank">
+    <img src="https://api.travis-ci.org/ziyi2/algorithms.svg?branch=master" alt="logo">
+  </a>
+</h2>
 
 I-Algorithms是基于《算法导论》衍生的一个Web前端学习文档。《算法导论》对于一些没有数学基础或者已经忘了数学知识的开发者而言学习相对困难，通过此学习文档希望能简化《算法导论》的一些理论知识，使的算法学习变得更加简单。在学习文档中，会使用JavaScript实现书中的一些算法，同时也会衍生一些书中没有的知识点，并寻找相应的面试题加以实践和说明。希望算法的学习不仅可以提升我们的编程能力，同时也有助于我们在各种面试中脱颖而出。
 
