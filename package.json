@@ -1,8 +1,12 @@
 {
   "name": "i-algorithms",
-  "version": "1.0.0",
+  "version": "0.0.2",
   "description": "Introduction To Algorithms With JavaScript.",
   "main": "lib",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ziyi2/algorithms"
+  },
   "scripts": {
     "dev": "vuepress dev docs",
     "dist": "vuepress build docs",
@@ -13,6 +17,9 @@
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0",
     "coveralls": "cat ./coverage/lcov.info | coveralls && rm -rf ./coverage"
   },
+  "files": [
+    "lib"
+  ],
   "keywords": [
     "algorithm",
     "javascript"
