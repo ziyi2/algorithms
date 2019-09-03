@@ -87,7 +87,7 @@ export default {
 }
 
 .language-javascript {
-  display: block;
+  display: block !important;
 }
 
 .code-content .language-javascript {

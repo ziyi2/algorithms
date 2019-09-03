@@ -2,7 +2,7 @@
 
 ## :heavy_plus_sign: 安装
 
-I-Algorithms中的JavaScript实现汇成了一套[API](/algorithms/api)并发布成了库包，具体安装如下：
+I-Algorithms中的JavaScript实现汇成了一套[API](/algorithms/api/_comparator)并发布成了库包，具体安装如下：
 
 ``` javascript
 npm i i-algorithms
@@ -18,4 +18,4 @@ const insertionSort = require('i-algorithms/insertion-sort')
 insertionSort([1,4,8,1,2,2,3])
 ```
 
-> 更多关于I-Algorithms的使用可查看[API](/algorithms/api)。
+> 更多关于I-Algorithms的使用可查看[API](/algorithms/api/_comparator)。

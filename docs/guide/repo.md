@@ -54,7 +54,7 @@ npm run deploy
 
 ## :package: 构建npm包
 
-会在`lib`目录下生成平级目录结构的[API](/algorithms/api/start)使用包
+会在`lib`目录下生成平级目录结构的[API](/algorithms/api/_comparator)使用包
 
 ``` javascript
 npm run lib
