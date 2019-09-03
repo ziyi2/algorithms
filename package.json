@@ -5,11 +5,11 @@
   "main": "lib",
   "scripts": {
     "dev": "vuepress dev docs",
-    "build": "vuepress build docs",
+    "dist": "vuepress build docs",
     "lint": "eslint src",
     "test": "jest --coverage",
-    "lib": "npm run lint && npm run test && rimraf lib && node bin/build",
-    "deploy": "npm run build && gh-pages -d docs/.vuepress/dist",
+    "build": "rimraf lib && node bin/build",
+    "deploy": "gh-pages -d docs/.vuepress/dist",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0"
   },
   "keywords": [
