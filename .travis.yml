@@ -1,6 +1,6 @@
 language: node_js
 node_js:
-  - 8
+  - 10
 branchs:
   only:
     - master
@@ -14,3 +14,5 @@ script:
  - npm test
  - npm run build
  - npm run dist
+after_success:
+ - npm run coveralls

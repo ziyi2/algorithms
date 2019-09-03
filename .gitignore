@@ -12,3 +12,6 @@ lib
 
 # rar
 algorithms.rar
+
+# coveralls
+.coveralls.yml
