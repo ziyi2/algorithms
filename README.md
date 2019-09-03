@@ -3,7 +3,9 @@
 
 <h3 align="center">
   <a href="https://www.travis-ci.org/ziyi2/algorithms" target="_blank">
-    <img src="https://api.travis-ci.org/ziyi2/algorithms.svg?branch=master" alt="logo">
+    <img src="https://api.travis-ci.org/ziyi2/algorithms.svg?branch=master" alt="Build Status">
+  </a>
+  <a href='https://coveralls.io/github/ziyi2/algorithms' target="_blank"><img src='https://coveralls.io/repos/github/ziyi2/algorithms/badge.svg' alt='Coverage Status' />
   </a>
 </h3>
 
