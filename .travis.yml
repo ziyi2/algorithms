@@ -1,0 +1,16 @@
+language: node_js
+node_js:
+  - 8
+branchs:
+  only:
+    - master
+cache:
+  directories:
+    - node_modules
+install:
+  - npm install
+script:
+ - npm run lint
+ - npm test
+ - npm run build
+ - npm run dist
