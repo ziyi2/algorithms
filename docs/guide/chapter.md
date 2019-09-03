@@ -6,19 +6,19 @@
 
 第一章：算法基础
 
-- [插入排序](//basic/insertion)
-- [插入排序习题](/basic/insertion-exercise)
-- [分析算法](/basic/analyse)
-- [分析算法习题](/basic/analyse-exercise)
-- [归并排序](/basic/merge)
-- [归并排序习题](/basic/merge-exercise)
+- [插入排序](/algorithms/basic/insertion)
+- [插入排序习题](/algorithms/basic/insertion-exercise)
+- [分析算法](/algorithms/basic/analyse)
+- [分析算法习题](/algorithms/basic/analyse-exercise)
+- [归并排序](/algorithms/basic/merge)
+- [归并排序习题](/algorithms/basic/merge-exercise)
 
 第二章：函数的增长
 
-- [渐进标记](/basic/symbol)
-- [渐进标记习题](/basic/symbol-exercise)
-- [常用函数](/basic/common)
-- [常用函数习题](/basic/common-exercise)
+- [渐进标记](/algorithms/basic/symbol)
+- [渐进标记习题](/algorithms/basic/symbol-exercise)
+- [常用函数](/algorithms/basic/common)
+- [常用函数习题](/algorithms/basic/common-exercise)
 
 第三章：分治策略
 

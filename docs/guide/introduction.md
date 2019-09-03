@@ -8,7 +8,7 @@
 I-Algorithms学习文档的章节设计将按照《算法导论》的章节内容进行设计，包括
 
 
-- **[基础知识](/basic/insertion)**
+- **[基础知识](/algorithms/basic/insertion)**
 - **排序和顺序统计量**
 - **数据结构**
 - **高级设计和分析技术**
@@ -16,16 +16,15 @@ I-Algorithms学习文档的章节设计将按照《算法导论》的章节内�
 - **图算法**
 - **算法问题选编**
 
-同时会将**数学基础知识**穿插到各个需要解释的章节中，关于各个章节的细节内容具体可查看[章节目录](/guide/chapter)。
+同时会将**数学基础知识**穿插到各个需要解释的章节中，关于各个章节的细节内容具体可查看[章节目录](/algorithms/guide/chapter)。
 
 ## :package: 库包
 
-I-Algorithms的JavaScript实现封装成了npm库包供开发者使用，如果你想尝试使用其中的一些算法API，可以查看[安装和使用](/guide/install)。
-
+I-Algorithms的JavaScript实现封装成了npm库包供开发者使用，如果你想尝试使用其中的一些算法API，可以查看[安装和使用](/algorithms/guide/install)。
 
 ## :busts_in_silhouette: 维护
 
-如果你觉得作者写的代码有Bug、不规范或者不优雅，想自己在作者的基础上进行修改或者给作者提Pull Request，可以查看[如何使用该仓库](/guide/repo)和[Pull Request](/guide/pull)。
+如果你觉得作者写的代码有Bug、不规范或者不优雅，想自己在作者的基础上进行修改或者给作者提Pull Request，可以查看[如何使用该仓库](/algorithms/guide/repo)和[Pull Request](/algorithms/guide/pull)。
 
 
 ## :bulb: 由来

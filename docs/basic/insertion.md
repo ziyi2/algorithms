@@ -8,7 +8,7 @@
 
 ## 实现
 
-关于插入排序的使用可查看[API/排序/insertionSort](/api/sort/#insertionSort)，插入排序的[JavaScript实现](https://github.com/ziyi2/algorithms/blob/dev/src/algorithms/sorting/insertionSort.js)如下：
+关于插入排序的使用可查看[API/排序/insertionSort](/algorithms/api/sort/#insertionSort)，插入排序的[JavaScript实现](https://github.com/ziyi2/algorithms/blob/dev/src/algorithms/sorting/insertionSort.js)如下：
 
 ``` javascript
 import comparator from '../../utils/comparator/_comparator'
