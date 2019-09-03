@@ -6,7 +6,7 @@
 
 第一章：算法基础
 
-- [插入排序](/basic/insertion)
+- [插入排序](//basic/insertion)
 - [插入排序习题](/basic/insertion-exercise)
 - [分析算法](/basic/analyse)
 - [分析算法习题](/basic/analyse-exercise)

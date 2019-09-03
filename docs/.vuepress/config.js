@@ -3,7 +3,7 @@ var nav = require('./links/nav.js');
 var path = require('path');
 
 module.exports = {
-  base: '/algorithms/',
+  base: '/',
   port: '8080',
   title: 'I-Algorithms',
   description: 'Introduction To Algorithms With JavaScript.',
