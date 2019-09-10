@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://ziyi2.github.io/algorithms/" target="_blank">
-    <img width="180" src="https://raw.githubusercontent.com/vuejs/vuepress/master/packages/docs/docs/.vuepress/public/hero.png" alt="logo">
+    <img width="180" src="https://raw.githubusercontent.com/ziyi2/algorithms/master/docs/.vuepress/public/logo.png" alt="logo">
   </a>
 </p>
 
