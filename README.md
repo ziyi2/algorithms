@@ -1,10 +1,9 @@
-<p align="center">
+
+<p align="center">
   <a href="https://ziyi2.github.io/algorithms/" target="_blank">
     <img width="180" src="https://raw.githubusercontent.com/ziyi2/algorithms/master/docs/.vuepress/public/logo.png" alt="logo">
   </a>
 </p>
-
-<h2 align="center">Algorithms</h2>
 
 <h3 align="center">
   <a href="https://www.travis-ci.org/ziyi2/algorithms" target="_blank">
