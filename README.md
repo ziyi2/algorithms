@@ -1,3 +1,9 @@
+<p align="center">
+  <a href="https://ziyi2.github.io/algorithms/" target="_blank">
+    <img width="180" src="https://raw.githubusercontent.com/vuejs/vuepress/master/packages/docs/docs/.vuepress/public/hero.png" alt="logo">
+  </a>
+</p>
+
 <h2 align="center">Algorithms</h2>
 
 <h3 align="center">
@@ -17,8 +23,8 @@ I-Algorithms是基于《算法导论》衍生的一个Web前端学习文档。�
 ## 特性
 
 - 简化《算法导论》的理论知识
-- 文档支持Latex排版
-- 文档配有深动形象的图例说明
+- 支持Latex排版
+- 配有深动形象的图例说明
 - 使用JavaScript实现算法
 - 章节会有配套的习题和面试题
 - 提供API文档供开发者尝试使用
