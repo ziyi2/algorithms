@@ -12,11 +12,12 @@
   <a href='https://coveralls.io/github/ziyi2/algorithms' target="_blank"><img src='https://coveralls.io/repos/github/ziyi2/algorithms/badge.svg' alt='Coverage Status' />
   </a>
   <a href="https://www.codacy.com/manual/ziyi2/algorithms?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=ziyi2/algorithms&amp;utm_campaign=Badge_Grade">
-    <img src="https://api.codacy.com/project/badge/Grade/6539612d15f1404d855a2f3aad5be2f5" alt="Build Status">
+    <img src="https://api.codacy.com/project/badge/Grade/6539612d15f1404d855a2f3aad5be2f5" alt="Analysis Status">
   </a>
   <a href="https://www.npmjs.com/package/i-algorithms">
-    <img src="https://img.shields.io/npm/v/i-algorithms" alt="Build Status">
+    <img src="https://img.shields.io/npm/v/i-algorithms" alt="Version Status">
   </a>
+  <img src="https://img.shields.io/npm/dm/i-algorithms" alt="Downloads Status">
 </h3>
 
 
