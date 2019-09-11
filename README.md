@@ -14,6 +14,9 @@
   <a href="https://www.codacy.com/manual/ziyi2/algorithms?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=ziyi2/algorithms&amp;utm_campaign=Badge_Grade">
     <img src="https://api.codacy.com/project/badge/Grade/6539612d15f1404d855a2f3aad5be2f5" alt="Build Status">
   </a>
+  <a href="https://www.npmjs.com/package/i-algorithms">
+    <img src="https://img.shields.io/npm/v/i-algorithms" alt="Build Status">
+  </a>
 </h3>
 
 
