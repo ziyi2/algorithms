@@ -18,6 +18,9 @@
     <img src="https://img.shields.io/npm/v/i-algorithms" alt="Version Status">
   </a>
   <img src="https://img.shields.io/npm/dm/i-algorithms" alt="Downloads Status">
+  <a href="https://github.com/ziyi2/algorithms/blob/master/LICENSE">
+    <img src="https://img.shields.io/github/license/ziyi2/i-algorithms" alt="Version Status">
+  </a>
 </h3>
 
 
