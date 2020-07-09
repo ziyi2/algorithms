@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    // 指定 ECMAScript 目标版本 "ES3"（默认）， "ES5"， "ES6" / "ES2015"， "ES2016"， "ES2017" 或 "ESNext"。
+    "target": "ES5",
+    // 删除所有注释，除了以 /!* 开头的版权信息
+    "removeComments": true,
+    // 生成相应的 .d.ts文件
+    "declaration": true,
+    // 启用所有严格类型检查选项。启用 --strict 相当于启用 --noImplicitAny, --noImplicitThis, --alwaysStrict， --strictNullChecks, --strictFunctionTypes 和 --strictPropertyInitialization
+    "strict": true,
+    // 禁止对同一个文件的不一致的引用
+    "forceConsistentCasingInFileNames": true,
+    // 报错时不生成输出文件
+    "noEmitOnError": true
+  }
+}

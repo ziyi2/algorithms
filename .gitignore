@@ -1,2 +1,6 @@
 # npm
 node_modules
+
+# build
+dist
+types

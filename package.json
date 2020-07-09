@@ -2,9 +2,14 @@
   "name": "algorithms-utils",
   "version": "1.0.0",
   "description": "算法与 TypeScript 实现",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "files": [
+    "dist",
+    "types"
+  ],
   "scripts": {
-    "log": "conventional-changelog -p angular -i CHANGELOG.md -s && git add CHANGELOG.md"
+    "build": "rimraf dist types && gulp",
+    "log": "rimraf CHANGELOG.md && conventional-changelog -p angular -i CHANGELOG.md -s && git add CHANGELOG.md"
   },
   "repository": {
     "type": "git",
@@ -25,7 +30,12 @@
     "@commitlint/config-conventional": "^9.0.1",
     "conventional-changelog-cli": "^2.0.34",
     "cz-customizable": "^6.2.1",
-    "husky": "^4.2.5"
+    "gulp": "^4.0.2",
+    "gulp-typescript": "^6.0.0-alpha.1",
+    "husky": "^4.2.5",
+    "merge2": "^1.4.1",
+    "rimraf": "^3.0.2",
+    "typescript": "^3.9.6"
   },
   "config": {
     "commitizen": {
