@@ -8,6 +8,7 @@
     "types"
   ],
   "scripts": {
+    "lint": "eslint src",
     "build": "rimraf dist types && gulp",
     "log": "rimraf CHANGELOG.md && conventional-changelog -p angular -i CHANGELOG.md -s && git add CHANGELOG.md"
   },
@@ -28,8 +29,11 @@
   "devDependencies": {
     "@commitlint/cli": "^9.0.1",
     "@commitlint/config-conventional": "^9.0.1",
+    "@typescript-eslint/eslint-plugin": "^3.6.0",
+    "@typescript-eslint/parser": "^3.6.0",
     "conventional-changelog-cli": "^2.0.34",
     "cz-customizable": "^6.2.1",
+    "eslint": "^7.4.0",
     "gulp": "^4.0.2",
     "gulp-typescript": "^6.0.0-alpha.1",
     "husky": "^4.2.5",
