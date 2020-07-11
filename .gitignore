@@ -4,3 +4,6 @@ node_modules
 # build
 dist
 types
+
+# eslint
+.eslintcache

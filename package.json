@@ -9,7 +9,8 @@
   ],
   "scripts": {
     "lint": "eslint src",
-    "build": "rimraf dist types && gulp",
+    "lint-strict": "eslint src --max-warnings 0",
+    "build": "npm run lint-strict && rimraf dist types && gulp",
     "log": "rimraf CHANGELOG.md && conventional-changelog -p angular -i CHANGELOG.md -s && git add CHANGELOG.md"
   },
   "repository": {
@@ -37,6 +38,7 @@
     "gulp": "^4.0.2",
     "gulp-typescript": "^6.0.0-alpha.1",
     "husky": "^4.2.5",
+    "lint-staged": "^10.2.11",
     "merge2": "^1.4.1",
     "rimraf": "^3.0.2",
     "typescript": "^3.9.6"
@@ -48,7 +50,11 @@
   },
   "husky": {
     "hooks": {
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
+      "pre-commit": "lint-staged"
     }
+  },
+  "lint-staged": {
+    "*.ts": "npm run lint-strict"
   }
 }
