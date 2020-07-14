@@ -6,3 +6,9 @@ gulpfile.js
 
 # commitizen
 commitlint.config.js
+
+# jest
+jest.config.js
+
+# build
+dist

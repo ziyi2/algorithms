@@ -8,10 +8,10 @@
     "types"
   ],
   "scripts": {
-    "lint": "eslint src",
-    "lint-strict": "eslint src --max-warnings 0",
-    "build": "npm run lint-strict && rimraf dist types && gulp",
-    "log": "rimraf CHANGELOG.md && conventional-changelog -p angular -i CHANGELOG.md -s && git add CHANGELOG.md"
+    "lint": "eslint src test --max-warnings 0",
+    "test": "jest --bail --coverage",
+    "build": "npm run lint && npm run test && rimraf dist types && gulp",
+    "changelog": "rimraf CHANGELOG.md && conventional-changelog -p angular -i CHANGELOG.md -s && git add CHANGELOG.md"
   },
   "repository": {
     "type": "git",
@@ -30,17 +30,21 @@
   "devDependencies": {
     "@commitlint/cli": "^9.0.1",
     "@commitlint/config-conventional": "^9.0.1",
+    "@types/jest": "^26.0.4",
     "@typescript-eslint/eslint-plugin": "^3.6.0",
     "@typescript-eslint/parser": "^3.6.0",
     "conventional-changelog-cli": "^2.0.34",
     "cz-customizable": "^6.2.1",
     "eslint": "^7.4.0",
+    "eslint-plugin-jest": "^23.18.0",
     "gulp": "^4.0.2",
     "gulp-typescript": "^6.0.0-alpha.1",
     "husky": "^4.2.5",
+    "jest": "^26.1.0",
     "lint-staged": "^10.2.11",
     "merge2": "^1.4.1",
     "rimraf": "^3.0.2",
+    "ts-jest": "^26.1.1",
     "typescript": "^3.9.6"
   },
   "config": {
@@ -55,6 +59,9 @@
     }
   },
   "lint-staged": {
-    "*.ts": "npm run lint-strict"
+    "*.ts": [
+      "npm run lint",
+      "npm run test"
+    ]
   }
 }
