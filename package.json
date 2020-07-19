@@ -10,8 +10,9 @@
   "scripts": {
     "lint": "eslint src test --max-warnings 0",
     "test": "jest --bail --coverage",
-    "build": "npm run lint && npm run test && rimraf dist types && gulp",
-    "changelog": "rimraf CHANGELOG.md && conventional-changelog -p angular -i CHANGELOG.md -s && git add CHANGELOG.md"
+    "prebuild": "npm run lint && npm run test",
+    "build": "rimraf dist types && gulp",
+    "version": "rimraf CHANGELOG.md && conventional-changelog -p angular -i CHANGELOG.md -s"
   },
   "repository": {
     "type": "git",
@@ -54,8 +55,8 @@
   },
   "husky": {
     "hooks": {
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
-      "pre-commit": "lint-staged"
+      "pre-commit": "lint-staged",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }
   },
   "lint-staged": {
