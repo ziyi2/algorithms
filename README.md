@@ -15,6 +15,7 @@
 - Git Commit Message
 - TypeScript
 - ESLint
+- Prettier
 - Lint Staged
 - Jest
 - Npm Script Hook
@@ -26,6 +27,8 @@
 - **framework:** 新增 TypeScript 编译能力 ([ebecee9](https://github.com/ziyi2/algorithms/commit/ebecee96551f8ed49a7b48c61be3da6b79ae3974))
 - **framework:** 新增 ESLint 代码校验能力 ([dca67d4](https://github.com/ziyi2/algorithms/commit/dca67d4da73259636c612e677d7d406903d7abd8))
 - **framework:** 新增 Lint Staged 上传校验能力 ([b440186](https://github.com/ziyi2/algorithms/commit/b440186dbd8ac4052fe3715882c8fe86c495a4ae))
+- **framework:** 新增 Jest 单元测试能力 ([6f086f2](https://github.com/ziyi2/algorithms/commit/6f086f27ac16be565f2cd4f49a310ad277571e08))
+- **framework:** 新增 Npm Scripts Hook 能力 ([93e597a](https://github.com/ziyi2/algorithms/commit/93e597a1cf9bc3d9ea6ba4c1e5ba18c4cb4575fe))
 
 > 温馨提示：以上都是使用 `npm run changelog` 自动生成的版本日志信息，你也可以通过仓库的 [CHANGELOG.md](https://github.com/ziyi2/algorithms/blob/feat/framework/CHANGELOG.md) 进行查看。
 
@@ -100,7 +103,7 @@ husky > commit-msg hook failed (add --no-verify to bypass)
 }
 ```
 
-> 温馨提示：这里没有新增 `module` 配置信息，因为默认输出 CommonJS 规范，更多关于 TypeScript 配置信息可查看[TypeScript 官方文档 / 编译选项](https://www.tslang.cn/docs/handbook/compiler-options.html)。如果对于 CommonJS 和 ES6 规范的区别不是很清晰，这里有一篇非常好的文档可以供大家阅读：[ES modules: A cartoon deep-dive](https://hacks.mozilla.org/2018/03/es-modules-a-cartoon-deep-dive/)。
+> 温馨提示：这里没有新增 `module` 配置信息，因为默认输出 CommonJS 规范，更多关于 TypeScript 配置信息可查看[TypeScript 官方文档 / 编译选项](https://www.tslang.cn/docs/handbook/compiler-options.html)。如果对于 CommonJS 和 ES modules 的区别不是很清晰，这里有一些非常好的文档可以供大家阅读：[ES modules: A cartoon deep-dive](https://hacks.mozilla.org/2018/03/es-modules-a-cartoon-deep-dive/)、[ES6 modules](https://github.com/rollup/rollup/wiki/ES6-modules)、以及 [pkg.module](https://github.com/rollup/rollup/wiki/pkg.module)。
 
 同时在根目录下新建 `gulpfile.js` 文件：
 
@@ -290,6 +293,127 @@ dist
 
 > 温馨提示：需要注意 Shell 中的 `&&` 和 `&` 是有差异的，`&&` 主要用于继发执行，只有前一个任务执行成功，才会执行下一个任务，`&` 主要用于并发执行，表示两个脚本同时执行。这里构建的命令需要等待 `lint` 命令执行通过才能进行，一旦 `lint` 失败那么构建命令将不再执行。
 
+#### ESLint Pre-Commit Hook
+
+尽管可能配置了 ESLint 的校验脚本 以及 VS Code 插件，但是有些 ESLint 的规则校验是无法通过 Save Auto Fix 的（例如质量规则），因此还需要一层保障能够确保代码提交之前所有的代码能够 ESLint 校验，这个配置将在 Lint Staged 中讲解。
+
+### Prettier
+
+#### Prettier 背景
+
+Prettier 是一个统一代码格式风格的工具，如果你不清楚为什么需要使用 Prettier，可以查看 [Why Prettier?](https://prettier.io/docs/en/why-prettier.html)。很多人可能疑惑，ESLint 已经能够规范我们的代码风格，为什么还需要 Prettier？在 [Prettier vs Linters](https://prettier.io/docs/en/comparison.html) 中详细说明了两者的区别，Linters 有两种类型的规则：
+
+- 格式规则（Formatting rules）：例如 [max-len](https://eslint.org/docs/rules/max-len)、[keyword-spacing](https://eslint.org/docs/rules/keyword-spacing)以及 [no-mixed-spaces-and-tabs](https://eslint.org/docs/rules/no-mixed-spaces-and-tabs) 等
+- 质量规则（Code-quality rules）：例如 [no-unused-vars](https://eslint.org/docs/rules/no-unused-vars)、[no-implicit-globals](https://eslint.org/docs/rules/no-implicit-globals) 以及 [prefer-promise-reject-errors](https://eslint.org/docs/rules/prefer-promise-reject-errors) 等
+
+ESLint 的规则校验同时包含了 **格式规则** 和 **质量规则**，但是需要注意的是大部分情况下只有 **格式规则** 可以通过 `--fix` 或 VS Code 插件的 Sava Auto Fix 功能一键修复，而 **质量规则** 更多的是发现代码的 Bug 防止代码出错，往往需要手动修复。因此 **格式规则** 并不是必须的，而 **质量规则** 则是必须的。Prettier 与 ESLint 的区别在于 Prettier 专注于统一的**格式规则**，从而减轻 ESLint 在**格式规则上**的校验，而对于**质量规则** 则交给专业的 ESLint 进行处理。总结一句话就是：Prettier for formatting and linters for catching bugs!（ESLint 是必须的，Prettier 是可选的！）
+
+需要注意如果 ESLint（TSLint） 和 Prettier 配合使用时**格式规则**有重复且产生了冲突，那么在编辑器中使用 Sava Auto Fix 时会让你的一键格式化哭笑不得。此时应该让两者把各自注重的规则功能区分开，使用 ESLint 校验**质量规则**，而**格式规则**则交给 Prettier 进行处理，更多信息可查看[Integrating with Linters](https://prettier.io/docs/en/integrating-with-linters.html)。
+
+> 温馨提示：在 VS Code 中使用 ESLint 匹配到相应的规则时会产生黄色波浪线提醒以及红色文件名提醒。Prettier 更希望你对格式规则无感知，从而不会让你觉得有任何使用的负担。如果想要了解更多 Prettier，还可以查看 Prettier 的背后思想 [Option Philosophy](https://prettier.io/docs/en/option-philosophy.html)，个人认为了解一个产品设计的**哲学**能更好的指导你使用该产品。
+
+#### Prettier 配置
+
+首先安装 Prettier 所需要的依赖：
+
+```javascript
+npm i  prettier eslint-config-prettier --save-dev
+```
+
+其中：
+
+- `[eslint-config-prettier](https://github.com/prettier/eslint-config-prettier)`: 用于解决 ESLint 和 Prettier 配合使用时容易产生的**格式规则**冲突问题，其作用就是关闭 ESLint 中配置的一些格式规则，除此之外还包括关闭 `@typescript-eslint/eslint-plugin`、`eslint-plugin-babel`、`eslint-plugin-react`、`eslint-plugin-vue`、`eslint-plugin-standard` 等格式规则。
+
+理论上而言，在项目中开启了 ESLint 的 `extends` 中设置了带有格式规则校验的规则集，那么就需要通过 `eslint-config-prettier` 插件关闭可能产生冲突的相对应的格式规则：
+
+```javascript
+{
+  "extends": [
+    "plugin:@typescript-eslint/recommended",
+    // 用于关闭 ESLint 相关的格式规则集，具体可查看 https://github.com/prettier/eslint-config-prettier/blob/master/index.js
+    "prettier",
+    // 用于关闭 @typescript-eslint/eslint-plugin 插件相关的格式规则集，具体可查看 https://github.com/prettier/eslint-config-prettier/blob/master/%40typescript-eslint.js
+    "prettier/@typescript-eslint",
+  ]
+}
+```
+
+配置完成后，可以通过[命令行接口](https://prettier.io/docs/en/cli.html)运行 Prettier:
+
+```javascript
+"scripts": {
+  "prettier": "prettier src test --write",
+},
+```
+
+`--write` 参数类似于 ESLint 中的 `--fix`（在 ESLint 中使用该参数还是需要谨慎哈，建议还是使用 VS Code 的 Save Auto Fix 功能），主要用于自动修复格式错误。此时书写格式的错误代码：
+
+```javascript
+import great from "@/greet";
+
+// 中间这么多空行
+export default {
+  great,
+};
+```
+
+执行 `npm run prettier` 进行格式修复：
+
+```javascript
+PS C:\Code\Git\algorithms> npm run prettier
+
+> algorithms-utils@1.0.0 prettier C:\Code\Git\algorithms
+> prettier src test --write
+
+src\greet.ts 149ms
+src\index.ts 5ms
+test\greet.spec.ts 11ms
+```
+
+修复之后的的文件格式如下：
+
+```javascript
+import great from "@/greet";
+
+export default {
+  great,
+};
+```
+
+需要注意如果某些规则集没有对应的 `eslint-config-prettier` 关闭配置，那么可以先通过 [CLI helper tool](https://github.com/prettier/eslint-config-prettier#cli-helper-tool) 检测是否有重复的格式规则集在生效，然后可以通过手动配置 `eslintrc.js` 的形式进行关闭（例如本项目中配置的 `plugin:jest/recommended` 可能存在规则冲突）：
+
+```javascript
+PS C:\Code\Git\algorithms> npx eslint --print-config src/index.ts | npx eslint-config-prettier-check
+No rules that are unnecessary or conflict with Prettier were found.
+```
+
+例如把 `eslint-config-prettier` 的配置去除，此时进行检查重复规则：
+
+```javascript
+PS C:\Code\Git\algorithms> npx eslint --print-config src/index.ts | npx eslint-config-prettier-check
+The following rules are unnecessary or might conflict with Prettier:
+
+- @typescript-eslint/no-extra-semi
+- no-mixed-spaces-and-tabs
+
+The following rules are enabled but cannot be automatically checked. See:
+https://github.com/prettier/eslint-config-prettier#special-rules
+
+- no-unexpected-multiline
+```
+
+此时假设 `eslint-config-prettier` 没有类似的关闭格式规则集，那么可以通过配置 `.eslintrc.js` 的形式自己关闭相应冲突的格式规则。
+
+> 温馨提示：ESLint 可以对不同的文件支持不同的规则校验， 因此 `--print-config` 只能对应单个文件的冲突格式规则检查。 由于通常的项目是一套规则对应一整个项目，因此对于整个项目所有的规则只需要校验一个文件是否有格式规则冲突即可。
+
+#### Prettier 插件
+
+通过命令行接口 `--write` 的形式可以进行格式自动修复，但是类似 ESLint，我们更希望项目在实时编辑的时候可以通过保存就自动格式化代码（鬼知道 `--fix` 以及 `--write` 格式了什么文件，当然更希望通过肉眼的形式立即感知格式化），此时可以通过配置 VS Code 的 [Prettier - Code formatter](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) 插件进行 Save Auto Fix，具体的配置查看插件文档。
+
+#### Prettier Pre-Commit Hook
+
+和 ESLint 一样，尽管可能配置了 Prettier 的自动修复格式脚本 以及 VS Code 插件，但是无法确保格式遗漏的情况，因此还需要一层保障能够确保代码提交之前所有的代码能够进行 Prettier 格式化，这个配置将在 Lint Staged 中讲解，更多配置方案也可以查看 [Prettier - Pre-commit Hook](https://prettier.io/docs/en/precommit.html)。
+
 ### Lint Staged
 
 #### Lint Staged 背景
@@ -297,7 +421,8 @@ dist
 在 Git Commit Message 中使用了 [commitlint](https://commitlint.js.org/#/) 工具配合 husky 可以防止生成不规范的 Git Commit Message，从而阻止用户进行不规范的 Git 代码提交，其原理就是监听了 Git Hook 的执行脚本（会在特定的 Git 执行命令诸如 `commit`、`push`、`merge` 等触发之前或之后执行相应的脚本钩子）。Git Hook 其实是进行项目约束非常好用的工具，它的作用包括但不限于：
 
 - Git Commit Message 规范强制统一
-- ESLint 规则统一，防止不符合规范的代码提交（当然也可以包括 Prettier 格式规范以及 Style 样式规范等）
+- ESLint 规则统一，防止不符合规范的代码提交
+- Prettier 自动格式化（类似的还包括 Style 样式格式等）
 - 代码稳定性提交，提交之前确保测试用例全部通过
 - 发送通知
 - CI 集成（服务端钩子）
@@ -340,9 +465,10 @@ npx mrm lint-staged
   }
 },
 "lint-staged": {
-  // 这里需要注意脚本的 --max-warnings 0
+  // 这里需要注意 ESLint 脚本的 --max-warnings 0
   // 否则就算存在 warning 也不会终止提交行为
-  "*.ts": "npm run lint"
+  // 这里追加了 Prettier 的自动格式化，确保代码提交之前所有的格式能够修复
+  "*.ts": ["npm run lint", "npm run prettier"]
 }
 ```
 
@@ -766,7 +892,7 @@ npm ERR!     C:\Users\子弈\AppData\Roaming\npm-cache\_logs\2020-07-13T02_25_12
 ```javascript
 "lint": "eslint src test --max-warnings 0",
 "test": "jest --bail --coverage",
-"build": "npm run lint && npm run test && rimraf dist types && gulp",
+"build": "npm run lint && npm run prettier && npm run test && rimraf dist types && gulp",
 "changelog": "rimraf CHANGELOG.md && conventional-changelog -p angular -i CHANGELOG.md -s"
 ```
 
@@ -775,7 +901,7 @@ npm ERR!     C:\Users\子弈\AppData\Roaming\npm-cache\_logs\2020-07-13T02_25_12
 ```javascript
 "lint": "eslint src test --max-warnings 0",
 "test": "jest --bail --coverage",
-"prebuild": "npm run lint && npm run test",
+"prebuild": "npm run lint && npm run prettier && npm run test",
 "build": "rimraf dist types && gulp",
 "changelog": "rimraf CHANGELOG.md && conventional-changelog -p angular -i CHANGELOG.md -s"
 ```
