@@ -13,7 +13,9 @@
     "test": "jest --bail --coverage",
     "prebuild": "npm run lint && npm run prettier && npm run test",
     "build": "rimraf dist types && gulp",
-    "changelog": "rimraf CHANGELOG.md && conventional-changelog -p angular -i CHANGELOG.md -s"
+    "changelog": "rimraf CHANGELOG.md && conventional-changelog -p angular -i CHANGELOG.md -s",
+    "docs:dev": "vuepress dev docs",
+    "docs:build": "vuepress build docs"
   },
   "repository": {
     "type": "git",
@@ -39,6 +41,7 @@
     "cz-customizable": "^6.2.1",
     "eslint": "^7.4.0",
     "eslint-config-prettier": "^6.11.0",
+    "eslint-loader": "^4.0.2",
     "eslint-plugin-jest": "^23.18.0",
     "gulp": "^4.0.2",
     "gulp-typescript": "^6.0.0-alpha.1",
@@ -49,7 +52,11 @@
     "prettier": "^2.0.5",
     "rimraf": "^3.0.2",
     "ts-jest": "^26.1.1",
-    "typescript": "^3.9.6"
+    "typescript": "^3.9.6",
+    "vuepress": "^1.5.2",
+    "vuepress-plugin-cat": "^1.0.3",
+    "vuepress-plugin-mathjax": "^1.2.8",
+    "vuepress-plugin-typescript": "^0.3.0"
   },
   "config": {
     "commitizen": {

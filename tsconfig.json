@@ -15,11 +15,12 @@
     "baseUrl": ".",
     // 非相对模块导入的路径映射配置，详见模块解析： https://www.tslang.cn/docs/handbook/module-resolution.html
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["src/*"],
+      "algorithms-utils/*": ["src/*"]
     }
   },
   // 编译器默认包含的编译文件
-  "include": ["src/**/*", "test/**/*"],
+  "include": ["src/**/*", "test/**/*", "docs/**/*"],
   // 编译器默认排除的编译文件
   "exclude": ["node_modules"]
 }
