@@ -1,68 +1,8 @@
-# 从零开始配置 TypeScript 工程环境
+# 从零开始配置 TypeScript 项目
 
 ## 前言
 
-本文是[算法与 TypeScript 实现](https://github.com/ziyi2/algorithms) 中 TypeScript 工程环境搭建过程介绍。
-
-> 题外话：[算法与 TypeScript 实现](https://github.com/ziyi2/algorithms)是个人对于算法学习的一个执着，会一直不间断的进行学习和记录。粗略看过 《算法导论》的同学会发现很难坚持把这本带有高等数学知识的书籍看完吃透，所以这里希望通过此**长期工程**能够简化一些算法的理论知识，衍生一些有趣的算法知识点，从而使得算法的学习可以变得相对简单。当然本文的重点不是介绍算法的理论知识，而是记录前期的一些准备工作。这里个人会将一些算法实现汇集成工具函数库供开发者学习或使用（会结合文档进行 API 的理论知识讲解），因此需要准备一个制作库包的配置环境。本文重点讲解了这个工具库包的环境配置过程，希望对缺少工程化配置经验的同学有所启示。
->
-> 温馨提示：需要注意如果你希望在项目中制作基于 TypeScript 实现的简单易用的工具函数库，你可以使用一些成熟的 "零配置" 工具，例如 [tsdx](https://github.com/formik/tsdx#readme)、[microbundle](https://github.com/developit/microbundle) 以及 [typescript-starter](https://github.com/bitjson/typescript-starter) 等，当然在选择的时候需要仔细考虑这些工具的特性，例如使用 TSLint 进行格式校验。如果功能不能满足项目需求你也可以基于这些工具进行团队的定制化改造，例如 [ts-lib-scripts](https://github.com/sinoui/ts-lib-scripts)。
-
-## 工程问题
-
-希望你读完这篇文章能够了解以下一些问题（很有可能成为工程化方面的面试题哦）：
-
-- 在使用 Git 的时候如何规范 Git 的提交说明（Commit 信息）？
-- 简述符合 Angular 规范的提交说明的结构组成？
-- Commit 信息如何和 Github Issues 关联？
-- 在设计一些库包时如何生成版本日志？
-- TypeScript 如何自动生成声明文件？
-- TypeScript 的格式校验目前而言采用 TSLint 还是 ESLint 更好，为什么？
-- 列举你知道的所有构建工具并说说这些工具的优缺点？
-- 列举你所知道的 ESLint 的功能？
-- ESLint 和 Prettier 的区别是什么？如何让两者一起工作？
-- 如何有效的识别 ESLint 和 Prettier 可能产生的冲突规则？如何解决此类规则冲突问题？
-- git hook 有哪些作用？
-- git hook 中客户端和服务端钩子各自主要用于什么作用？
-- git hook 中常用的钩子有哪些？
-- `pre-commit` 和 `commit-msg` 钩子的区别是什么？各自可用于做什么？
-- husky 以及 ghook 等工具制作 git hook 的原理是什么？
-- 如何设计一个通用的 git hook ？
-- lint-staged 的功能和原理是什么？
-- Vs Code 配置中的用户和工作区有什么区别？
-- 谈谈你所理解的 npm scripts，它有哪些功能（这个范围可以很大）？
-- 你所知道的测试有哪些测试类型？
-- 你所知道的测试框架有哪些？
-- 假设现在有一个插入排序算法，如何对该算法进行单元测试？
-- 假设你自己实现的 React 或 Vue 的组件库要设计演示文档，你会如何设计？设计的文档需要实现哪些功能？
-- 在设计工具库包的时候你是如何设计 API 文档的？
-- 在通常的脚手架项目中进行热更新（hot module replacement）时如何做到 ESLint 实时打印校验错误信息？
-- 你所知道的 CI / CD 框架有哪些？在项目中有接触过类似的流程吗？
-- CI 和 CD 的区别是什么？
-
-除此之外如果你对其他相关的知识感兴趣（非本文相关的知识），希望你能额外深入探寻这些知识：
-
-- CommonJS 和 ES Module 的区别？
-- Tree Shaking 的作用是什么？什么情况下可以使用 Tree Shaking 的能力？
-- 如何引入 ES Module 库包？在构建层面和包描述文件层面需要注意哪些方面？
-- 谈谈你对 TypeScript 声明文件的理解？在制作库包时如何对外识别声明文件？在外部使用时有哪些好处？
-- 在制作工具包的时候如何考虑按需引入和全量引入的优雅引入设计（可参考 Lodash）？
-- 你知道哪些制作工具函数库的脚手架？如何定制制作工具包的脚手架？
-- 了解 Vue CLI 3.x 吗？它有哪些功能？能谈谈它实现的原理吗？如何基于 Vue CLI 定制符合自己项目的脚手架？
-- 了解 react-scripts 吗？如何基于 react-scripts 定制符合自己项目的脚手架？
-- 工程化领域的设计可以有哪些设计阶段（例如 react-scripts 和 vue ui 在设计以及使用形态上的区别）？
-- 工程化领域在跨端方面的设计（如何基于当前公司已有的脚手架进行多端一体化的整合，所谓的脚手架包括工具库脚手架，单组件设计脚手架、组件库脚手架以及项目脚手架等）？
-- 工程化监控（使用版本信息、版本兼容性报错信息分析、使用功能分析等）？
-
-> 温馨提示：有些问题在本文中能够得到答案，有些问题需要自己扩展阅读或查看源码才能得到答案（作者同样是工程化领域的小白，以上的这些问题同样在问自己，因为自己也需要不断的学习）。
-
-## 工程框架
-
-这里需要设计一个整体的框架图
-
-## 配置环境
-
-本项目的配置环境主要包含：
+本文是[算法与 TypeScript 实现](https://github.com/ziyi2/algorithms)中 TypeScript 项目整体的环境配置过程介绍。主要包括了以下一些配置内容：
 
 - Git Commit Message
 - TypeScript
@@ -74,7 +14,73 @@
 - Vuepress
 - Github Actions
 
-需要注意以下配置说明可能会省略某些细节步骤（例如某些依赖的 NPM 包安装、某些配置文件说明等），如果想要知道更多细节信息，可查看各个配置的 Commit 提交信息：
+如果你对以上的某些配置非常熟悉，则可以跳过阅读。如果你不清楚是否要继续阅读其中的一些配置信息，则可以通过**工程问题**来决定是否要继续阅读相关的内容。
+
+[算法与 TypeScript 实现](https://github.com/ziyi2/algorithms) 关于当前配置的改造在 [feat/framework](https://github.com/ziyi2/algorithms/tree/feat/framework) 分支上，希望刚兴趣的同学可以 star 一波。[学习文档](https://ziyi2.github.io/algorithms/) 目前仍然是老版本的学习文档，之后会进行持续更新。
+
+> **温馨提示**：如果你希望在项目中制作基于 TypeScript 实现的简单易用的工具函数库，你可以使用一些成熟的 "零配置" 脚手架，例如 [tsdx](https://github.com/formik/tsdx#readme)、[microbundle](https://github.com/developit/microbundle) 以及 [typescript-starter](https://github.com/bitjson/typescript-starter) 等。如果功能不能满足你的项目需求，你也可以基于这些工具进行团队的定制化改造，例如 [ts-lib-scripts](https://github.com/sinoui/ts-lib-scripts)。
+
+## 配置问题
+
+希望你读完这篇文章能够了解以下一些问题（很有可能成为工程配置方面的面试题哦，细节决定成败）：
+
+- 在使用 Git 的时候如何规范 Git 的提交说明（Commit 信息）？
+- 简述符合 Angular 规范的提交说明的结构组成？
+- Commit 信息如何和 Github Issues 关联？
+- 在设计一些库包时如何生成版本日志？
+- TypeScript 如何自动生成库包的声明文件？
+- TypeScript 目前是采用 TSLint 还是 ESLint 进行代码校验，为什么？
+- 列举你知道的所有构建工具并说说这些工具的优缺点？这些构建工具在不同的场景下应该如何选型？
+- Babel 对于 TypeScript 的支持有哪些限制？
+- 列举你所知道的 ESLint 功能？
+- 如何确保构建和上传的代码无 ESLint 错误信息？
+- ESLint 和 Prettier 的区别是什么？两者在一起工作时会产生问题吗？
+- Linters 有哪两种类型的校验规则？
+- 如何有效的识别 ESLint 和 Prettier 可能产生冲突的格式规则？如何解决此类规则冲突问题？
+- git hook 在项目中哪些作用？
+- git hook 中客户端和服务端钩子各自用于什么作用？
+- git hook 中常用的钩子有哪些？
+- `pre-commit` 和 `commit-msg` 钩子的区别是什么？各自可用于做什么？
+- husky 以及 ghook 等工具制作 git hook 的原理是什么？
+- 如何设计一个通用的 git hook ？
+- git hook 可以采用 Node 脚本进行设计吗？如何做到？
+- lint-staged 的功能是什么？
+- VS Code 配置中的用户和工作区有什么区别？
+- VS Code 的插件可以只对当前项目生效吗？
+- 谈谈你所理解的 npm scripts，它有哪些功能？
+- 你所知道的测试有哪些测试类型？
+- 你所知道的测试框架有哪些？
+- 什么是 e2e 测试？有哪些 e2e 的测试框架？
+- 假设现在有一个插入排序算法，如何对该算法进行单元测试？
+- 假设你自己实现的 React 或 Vue 的组件库要设计演示文档，你会如何设计？设计的文档需要实现哪些功能？
+- 在设计工具库包的时候你是如何设计 API 文档的？
+- 在通常的脚手架项目中进行热更新（hot module replacement）时如何做到 ESLint 实时打印校验错误信息？
+- Vuepress 有哪些功能特点？
+- 你所知道的 CI / CD 工具有哪些？在项目中有接触过类似的流程吗？
+- CI 和 CD 的区别是什么？
+- Github Actions 的特点是什么？
+
+除此之外如果你对其他相关的知识感兴趣（非本文相关的知识），希望你能额外深入去探索：
+
+- TypeScript 的特点？
+- CommonJS 和 ES Module 有哪些区别？
+- Tree Shaking 的作用是什么？什么情况下可以使用 Tree Shaking 的能力？
+- 如何引入 ES Module 库包？在构建层面和包描述文件层面需要注意哪些方面？
+- 谈谈你对 TypeScript 声明文件的理解？在制作库包时如何对外识别声明文件？在外部使用时有哪些好处？
+- 在制作工具包的时候如何考虑按需引入和全量引入的优雅引入设计？
+- 你知道哪些制作工具函数库的脚手架？
+- 了解 Vue CLI 3.x 的功能特点吗？如何基于 Vue CLI 3.x 定制符合团队项目的脚手架？
+- 了解 react-scripts 吗？
+- 工程化配置领域的设计可以有哪些设计阶段（例如 react-scripts 和 vue ui 在设计以及使用形态上的区别）？
+- 工程化配置监控（使用版本信息、版本兼容性报错信息分析、使用功能分析等）？
+
+> **温馨提示**：有些问题在本文中能够得到答案，有些问题需要自己扩展阅读或查看源码才能得到答案（作者同样是工程化配置领域的小白，以上的这些问题同样在问自己）。
+
+## 配置框架
+
+![](https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/ffa9b1246e2346b6bcac52d0ffa59307~tplv-k3u1fbpfcp-zoom-1.image)
+
+需要注意文档中的配置说明可能会省略某些细节步骤（例如某些依赖的 npm 包安装、某些配置文件说明等），如果想要知道更多细节信息，可查看各个配置的 Commit 提交信息：
 
 - 项目初始化 ([afaa458](https://github.com/ziyi2/algorithms/commit/afaa4583009ea5ac3ead2f3bfc5c61103ce8533c))
 - **framework:** 新增 Git Commit Message 规范提交能力 ([d04e259](https://github.com/ziyi2/algorithms/commit/d04e25977a7041b5e2d9d801934d554ab6815c42))
@@ -85,8 +91,9 @@
 - **framework:** 新增 Jest 单元测试能力 ([6f086f2](https://github.com/ziyi2/algorithms/commit/6f086f27ac16be565f2cd4f49a310ad277571e08))
 - **framework:** 新增 Npm Scripts Hook 能力 ([93e597a](https://github.com/ziyi2/algorithms/commit/93e597a1cf9bc3d9ea6ba4c1e5ba18c4cb4575fe))
 - **framework:** 新增 Vuepress 演示文档能力 ([66e38d1](https://github.com/ziyi2/algorithms/commit/66e38d1ec9965846d5e1928e58dcfcd9967307d7))
+- **framework:** 新增 Github Actions 能力 ([1cc85a4](https://github.com/ziyi2/algorithms/commit/1cc85a4ae4d6c378e8896a35de60565e2f72f865))
 
-> 温馨提示：以上都是使用 `npm run changelog` 自动生成的版本日志信息，你也可以通过仓库的 [CHANGELOG.md](https://github.com/ziyi2/algorithms/blob/feat/framework/CHANGELOG.md) 进行查看。
+> **温馨提示**：以上都是使用 `npm run changelog` 自动生成的版本日志信息，你也可以通过仓库的 [CHANGELOG.md](https://github.com/ziyi2/algorithms/blob/feat/framework/CHANGELOG.md) 进行查看。
 
 ### Git Commit Message
 
@@ -102,7 +109,7 @@
 - 代码提交之前会通过 [husky](https://github.com/typicode/husky) 配合 git hook 进行提交信息校验，一旦提交信息不符合 Angular 规范，则提交会失败
 - 执行 `npm run changelog` 会在根目录下自动生成 `CHANGELOG.md` 版本日志
 
-> 温馨提示：husky 中文的意思是哈士奇，大家可以想象一下为什么这个工具叫哈士奇，是不是咬着你不放的意思（or more 🐶 woof!），一旦它咬着你的代码提交不放，这将会是非常有趣的一件事情，在后续的工具配置中，我们仍然将于哈士奇见面，看看它会具体咬什么东西！
+> **温馨提示**：husky 中文的意思是哈士奇，大家可以想象一下为什么这个工具叫哈士奇，是不是咬着你不放的意思（or more 🐶 woof!），一旦它咬着你的代码提交不放，这将会是非常有趣的一件事情，在后续的工具配置中，我们仍然将于哈士奇见面，看看它会具体咬什么东西！
 
 例如当你提交了一个不符合规范的 Commit Message（此时提交失败）：
 
@@ -119,7 +126,7 @@ husky > commit-msg (node v12.13.1)
 husky > commit-msg hook failed (add --no-verify to bypass)
 ```
 
-> 温馨提示：如果不知道什么是 CLI （命令行接口），可查看 [使用 NPM 发布和使用 CLI 工具](https://juejin.im/post/5eb89053e51d454de54db501)。
+> **温馨提示**：如果不知道什么是 CLI （命令行接口），可查看 [使用 NPM 发布和使用 CLI 工具](https://juejin.im/post/5eb89053e51d454de54db501)。
 
 ### TypeScript
 
@@ -134,11 +141,11 @@ husky > commit-msg hook failed (add --no-verify to bypass)
 
 由于算法的函数工具库功能非常单一简单，因此采用 TypeScript 官方推荐的 Gulp 工具进行构建即可满足需求。
 
-> 温馨提示：更多构建工具可以了解 [esbuild](https://github.com/evanw/esbuild)、[parcel](https://github.com/parcel-bundler/parcel)以及 [backpack](https://github.com/jaredpalmer/backpack) 等。当然如果你想要更多了解这些构建工具的差异以及在什么项目环境下应该做如何选型，可以自行搜索前端构建工具的对比或差异，这里推荐一篇个人觉得总结不错的文章 [前端构建：3 类 13 种热门工具的选型参考](https://segmentfault.com/a/1190000017183743)。
+> **温馨提示**：更多构建工具可以了解 [esbuild](https://github.com/evanw/esbuild)、[parcel](https://github.com/parcel-bundler/parcel)以及 [backpack](https://github.com/jaredpalmer/backpack) 等。当然如果你想要更多了解这些构建工具的差异以及在什么项目环境下应该做如何选型，可以自行搜索前端构建工具的对比或差异，这里推荐一篇个人觉得总结不错的文章 [前端构建：3 类 13 种热门工具的选型参考](https://segmentfault.com/a/1190000017183743)。
 
 #### TypeScript 配置
 
-本项目会构建输出 CommonJS 工具包（npm 包）供外部使用，采用 TypeScript 设计并输出声明文件有助于外部更好的使用该资源包。TypeScript 编译采用官方文档推荐的 Gulp 工具并配合 [gulp-typescript](https://github.com/ivogabe/gulp-typescript) 和 [tsconfig.json](https://www.tslang.cn/docs/handbook/tsconfig-json.html) 配置文件。在根目录下新建 `tsconfig.json` 文件并新增以下配置：
+本项目会构建输出 CommonJS 工具包（npm 包）供外部使用，采用 TypeScript 设计并输出声明文件有助于外部更好的使用该资源包进行 API 的提示。TypeScript 编译采用官方文档推荐的 Gulp 工具并配合 [gulp-typescript](https://github.com/ivogabe/gulp-typescript) 和 [tsconfig.json](https://www.tslang.cn/docs/handbook/tsconfig-json.html) 配置文件。在根目录下新建 `tsconfig.json` 文件并新增以下配置：
 
 ```javascript
 {
@@ -159,7 +166,7 @@ husky > commit-msg hook failed (add --no-verify to bypass)
 }
 ```
 
-> 温馨提示：这里没有新增 `module` 配置信息，因为默认输出 CommonJS 规范，更多关于 TypeScript 配置信息可查看[TypeScript 官方文档 / 编译选项](https://www.tslang.cn/docs/handbook/compiler-options.html)。如果对于 CommonJS 和 ES modules 的区别不是很清晰，这里有一些非常好的文档可以供大家阅读：[ES modules: A cartoon deep-dive](https://hacks.mozilla.org/2018/03/es-modules-a-cartoon-deep-dive/)、[ES6 modules](https://github.com/rollup/rollup/wiki/ES6-modules)、以及 [pkg.module](https://github.com/rollup/rollup/wiki/pkg.module)。
+> **温馨提示**：这里没有新增 `module` 配置信息，因为默认输出 CommonJS 规范，更多关于 TypeScript 配置信息可查看[TypeScript 官方文档 / 编译选项](https://www.tslang.cn/docs/handbook/compiler-options.html)。如果对于 CommonJS 和 ES modules 的区别不是很清晰，这里有一些非常好的文档可以供大家阅读：[ES modules: A cartoon deep-dive](https://hacks.mozilla.org/2018/03/es-modules-a-cartoon-deep-dive/)、[ES6 modules](https://github.com/rollup/rollup/wiki/ES6-modules)。如果想了解如何对外提供 ES Module 可以查看 [pkg.module](https://github.com/rollup/rollup/wiki/pkg.module)。
 
 同时在根目录下新建 `gulpfile.js` 文件：
 
@@ -175,7 +182,7 @@ gulp.task("default", function () {
 });
 ```
 
-在 `package.json` 中新增 script 脚本：
+在 `package.json` 中新增 npm script 脚本：
 
 ```javascript
 "scripts": {
@@ -183,7 +190,7 @@ gulp.task("default", function () {
 },
 ```
 
-其中 [rimfaf](https://github.com/isaacs/rimraf) 用于在构建之前清除 dist 目录文件内容。此时在 `src` 目录下新增 TypeScript 源码并使用 `npm run build` 命令可以进行项目构建并输出 CommonJS 规范的目标代码到 `dist` 目录下。
+其中 [rimfaf](https://github.com/isaacs/rimraf) 用于在构建之前清除 `dist` 目录文件内容。此时在 `src` 目录下新增 TypeScript 源码并使用 `npm run build` 命令可以进行项目构建并输出 CommonJS 规范的目标代码到 `dist` 目录下。
 
 除此之外，此项目希望可以快速生成声明文件供外部进行代码提示，此时仍然可以借助 `gulp-typescript` 工具自动生成声明文件。在 `gulpfile.js` 中新增以下配置
 
@@ -214,7 +221,7 @@ gulp.task("default", function () {
 
 再次执行 `npm run build` 会在项目根目录下生成 `types` 文件夹，该文件夹主要存放自动生成的 TypeScript 声明文件。
 
-需要注意发布 npm 包时默认会将当前项目的所有文件进行发布处理，但这里希望发布的包只包含使用者需要的编译文件 `dist` 和 `types`，因此可以通过`package.json` 中的 [`files`](https://docs.npmjs.com/files/package.json#files)（用于指定发布的 NPM 包包含哪些文件） 字段信息进行控制：
+需要注意发布 npm 包时默认会将当前项目的所有文件进行发布处理，但这里希望发布的包只包含使用者需要的编译文件 `dist` 和 `types`，因此可以通过`package.json` 中的 [`files`](https://docs.npmjs.com/files/package.json#files)（用于指定发布的 npm 包包含哪些文件） 字段信息进行控制：
 
 ```javascript
 "files": [
@@ -223,7 +230,7 @@ gulp.task("default", function () {
 ],
 ```
 
-> 温馨提示：发布的 npm 包中某些文件将忽视 `files` 字段信息，包括 `package.json`、`LICENSE`、`README.md` 等。
+> **温馨提示**：发布的 npm 包中某些文件将忽视 `files` 字段信息的配置，包括 `package.json`、`LICENSE`、`README.md` 等。
 
 除此之外，如果希望发布的 npm 包通过 `require('algorithms-utils')` 或 `import` 形式引入时指向 `dist/index.js` 文件，需要配置 `package.json` 中的 [`main`](https://docs.npmjs.com/files/package.json#main) 字段信息：
 
@@ -231,29 +238,29 @@ gulp.task("default", function () {
 "main": "dist/index.js"
 ```
 
-> 温馨提示： 对于工具包使用全量引入的方式并不是一个好的选择，可以通过具体的工具方法进行按需引入。
+> **温馨提示**： 对于工具包使用全量引入的方式并不是一个好的选择，可以通过具体的工具方法进行按需引入。
 
 ### ESLint
 
 #### ESLint 背景
 
-TypeScript 的代码检查工具主要有 TSLint 和 ESLint 两种。早期的 TypeScript 项目一般采用 TSLint 进行检查，TSLint 和 TypeScript 采用同样的 AST 格式进行编译，但主要问题是对于 JavaScript 生态的项目支持不够友好，因此 TypeScript 团队在 2019 年宣布全面转向 ESLint（具体可查看 TypeScript 官方仓库的 [`.eslintrc.json`](https://github.com/microsoft/TypeScript/blob/master/.eslintrc.jso) 配置），更多关于转向 ESLint 的原因可查看：
+TypeScript 的代码检查工具主要有 TSLint 和 ESLint 两种。早期的 TypeScript 项目一般采用 TSLint 进行检查。TSLint 和 TypeScript 采用同样的 AST 格式进行编译，但主要问题是对于 JavaScript 生态的项目支持不够友好，因此 TypeScript 团队在 2019 年宣布全面转向 ESLint（具体可查看 TypeScript 官方仓库的 [`.eslintrc.json`](https://github.com/microsoft/TypeScript/blob/master/.eslintrc.jso) 配置），更多关于转向 ESLint 的原因可查看：
 
 - <https://medium.com/palantir/tslint-in-2019-1a144c2317a9>
 - <https://github.com/microsoft/TypeScript/issues/30553>
 
-TypeScript 和 ESLint 使用不同的 AST 进行解析，因此为了在 ESLint 中支持 TypeScript 代码检查需要制作额外的[自定义解析器](https://cn.eslint.org/docs/developer-guide/working-with-custom-parsers)（Custom Parsers，ESLint 的自定义解析器功能需要基于 [ESTree](https://github.com/estree/estree)），目的是为了能够解析 TypeScript 语法并转成与 ESLint 兼容的 AST。[@typescript-eslint/parser](https://github.com/typescript-eslint/typescript-eslint#getting-started--installation) 在这样的背景下诞生，它会处理所有 ESLint 特定的配置并调用 [@typescript-eslint/typescript-estree](https://github.com/typescript-eslint/typescript-eslint/tree/master/packages/typescript-estree) 生成 ESTree-compatible AST（需要注意的是不仅仅兼容 ESLint，也能够兼容 Prettier）。
+TypeScript 和 ESLint 使用不同的 AST 进行解析，因此为了在 ESLint 中支持 TypeScript 代码检查需要制作额外的[自定义解析器](https://cn.eslint.org/docs/developer-guide/working-with-custom-parsers)（Custom Parsers，ESLint 的自定义解析器功能需要基于 [ESTree](https://github.com/estree/estree)），目的是为了能够解析 TypeScript 语法并转成与 ESLint 兼容的 AST。[@typescript-eslint/parser](https://github.com/typescript-eslint/typescript-eslint#getting-started--installation) 在这样的背景下诞生，它会处理所有 ESLint 特定的配置并调用 [@typescript-eslint/typescript-estree](https://github.com/typescript-eslint/typescript-eslint/tree/master/packages/typescript-estree) 生成 ESTree-compatible AST（需要注意不仅仅兼容 ESLint，也能兼容 Prettier）。
 
-`@typescript-eslint` 是一个 Monorepo 体系结构的仓库，采用 [Learn](https://github.com/lerna/lerna) 进行设计，除了上述提到的 NPM 包之外，还包含以下两个重要的 NPM 包：
+`@typescript-eslint` 是一个采用 [Learn](https://github.com/lerna/lerna) 进行设计的 Monorepo 结构仓库，除了上述提到的 npm 包之外，还包含以下两个重要的 npm 包：
 
 - [@typescript-eslint/eslint-plugin](https://github.com/typescript-eslint/typescript-eslint/tree/master/packages/eslint-plugin): 配合 `@typescript-eslint/parser` 一起使用的 ESLint 插件，可以设置 TypeScript 的校验规则。
-- [@typescript-eslint/eslint-plugin-tslint](https://github.com/typescript-eslint/typescript-eslint/tree/master/packages/eslint-plugin-tslint): TSLint 向 ESLint 迁移的插件。
+- [@typescript-eslint/eslint-plugin-tslint](https://github.com/typescript-eslint/typescript-eslint/tree/master/packages/eslint-plugin-tslint): TSLint 向 ESLint 进行迁移的插件。
 
-> 温馨提示：如果你正在使用 TSLint，并且你希望兼容 ESLint 或者向 ESLint 进行过渡（TSLint 和 ESLint 并存）， 可查看 [Migrating from TSLint to ESLint](https://github.com/typescript-eslint/typescript-eslint#migrating-from-tslint-to-eslint)。除此之外，以上所介绍的这些包发布时版本一致（为了联合使用的适配性），如果还有什么需要注意的话你可能需要关心一下 `@typescript-eslint` 对于 TypeScript 和 ESLint 的版本支持性，更多可查看 @typescript-eslint/parser 的仓库信息。
+> **温馨提示**：如果你正在使用 TSLint，并且你希望兼容 ESLint 或者向 ESLint 进行过渡（TSLint 和 ESLint 并存）， 可查看 [Migrating from TSLint to ESLint](https://github.com/typescript-eslint/typescript-eslint#migrating-from-tslint-to-eslint)。除此之外，以上所介绍的这些包发布时版本一致（为了联合使用的兼容性），需要额外注意`@typescript-eslint` 对于 TypeScript 和 ESLint 的版本支持性，更多可查看 @typescript-eslint/parser 的仓库信息。
 
 #### ESLint 配置
 
-从背景的介绍中可以理解，对于全新的 TypeScript 项目（直接抛弃 TSLint）需要包含解析 AST 的解析器 @typescript-eslint/parser 和使用校验规则的插件 @typescript-eslint/eslint-plugin，这里需要在项目中进行安装
+从背景的介绍中可以理解，对于全新的 TypeScript 项目（直接抛弃 TSLint）需要包含解析 AST 的解析器 @typescript-eslint/parser 和使用校验规则的插件 @typescript-eslint/eslint-plugin，这里需要在项目中进行安装：
 
 ```javascript
 npm i --save-dev eslint @typescript-eslint/parser @typescript-eslint/eslint-plugin
@@ -276,7 +283,7 @@ module.exports = {
 - `plugins: ['@typescript-eslint']`：在 ESLint 中加载插件 `@typescript-eslint/eslint-plugin`，该插件可用于配置 TypeScript 校验规则。
 - `extends: [ ... ]`：在 ESLint 中使用[共享规则配置](https://cn.eslint.org/docs/developer-guide/shareable-configs)，其中 `eslint:recommended` 是 ESLint 内置的推荐校验规则配置（也被称作最佳规则实践），`plugin:@typescript-eslint/recommended` 是类似于 `eslint:recommended` 的 TypeScript 推荐校验规则配置。
 
-> 温馨提示：如果你稍微阅读一下 recommanded 源码你会发现，其实内部可以理解为推荐校验规则的集合。因此如果想基于 `@typescript-eslint/eslint-plugin` 进行自定义规则，则可参考 [TypeScript Supported Rules](https://github.com/typescript-eslint/typescript-eslint/tree/master/packages/eslint-plugin#supported-rules)。
+> **温馨提示**：如果你稍微阅读一下 recommanded 源码你会发现，其实内部可以理解为推荐校验规则的集合。因此如果想基于 `@typescript-eslint/eslint-plugin` 进行自定义规则，则可参考 [TypeScript Supported Rules](https://github.com/typescript-eslint/typescript-eslint/tree/master/packages/eslint-plugin#supported-rules)。
 
 配置完成后在 `package.json` 中设置校验命令
 
@@ -298,15 +305,15 @@ C:\Code\Git\algorithms\src\greet.ts
 ✖ 1 problem (0 errors, 1 warning)
 ```
 
-> 温馨提示：输出的错误信息是通过 [ESLint Formatters](https://cn.eslint.org/docs/user-guide/formatters/) 生成，查看 ESLint 源代码并调试可发现默认采用的是 [stylish](https://cn.eslint.org/docs/user-guide/formatters/#stylish) formatter。
+> **温馨提示**：输出的错误信息是通过 [ESLint Formatters](https://cn.eslint.org/docs/user-guide/formatters/) 生成，查看 ESLint 源代码并调试可发现默认采用的是 [stylish formatter](https://cn.eslint.org/docs/user-guide/formatters/#stylish) 。
 
 #### ESLint 插件
 
-如果不使用插件，很难发现代码可能存在 TypeScript 格式错误（除非手动执行 `npm run lint` 或监听代码的变更并实时运行 `npm run lint`，从而使得开发者可以在控制台查看校验错误信息，监听并实时输出 lint 信息的功能可以通过 `gulp` 实现），此时可以通过 VS Code 插件进行处理。安装 ESLint 插件后可进行代码的实时提示，具体如下图所示：
+如果不使用插件，很难发现代码可能存在 TypeScript 格式错误，因为在书写代码的时候除了手动执行 `npm run lint` 以外没有任何的实时提示信息（你当然也可以通过 `gulp`监听文件的变化并执行 `npm run lint`）。为了可以实时看到 TypeScript 错误信息，可以通过 VS Code 插件进行处理。安装 ESLint 插件后可进行代码的实时提示，具体如下图所示：
 
-![ESLint Plugin.png](https://raw.githubusercontent.com/ziyi2/algorithms/feat/framework/images/ESLint%20Plugin.png)
+![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/9ba4243fa7c14006986605984b5b7f81~tplv-k3u1fbpfcp-zoom-1.image)
 
-当然为了防止不需要被校验的文件出现校验信息（例如配置文件），可以通过 `.eslintignore` 文件进行配置（例如以下是目前为止产生的一些配置文件）：
+当然为了防止不需要被校验的文件出现校验信息，可以通过 `.eslintignore` 文件进行配置（例如以下都是一些不需要格式校验的配置文件）：
 
 ```javascript
 # gulp
@@ -325,7 +332,7 @@ jest.config.js
 dist
 ```
 
-此时可以发现之前执行 `lint` 命令的错误通过插件的形式可实时在 VS Code 编辑器中进行显示。除此之外，一些简单的 ESLint 格式错误（例如多余的`;` 等）可通过配置 Save Auto Fix 进行保存自动格式化处理。具体 VS Code 的配置可参考 [ESLint 插件](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)的文档说明，这边应该需要进行如下配置：
+此时可以发现之前执行 `lint` 命令的错误通过插件的形式可实时在 VS Code 编辑器中进行显示。除此之外，一些 ESLint 的格式校验错误（例如多余的`;` 等）可通过配置 Save Auto Fix 进行保存自动格式化处理。具体 VS Code 的配置可参考 [ESLint 插件](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) 的文档说明，这边应该需要进行如下配置：
 
 ```javascript
 "editor.codeActionsOnSave": {
@@ -334,9 +341,11 @@ dist
 }
 ```
 
-> 温馨提示：VS Code 的配置分为两种类型（用户和工作区），针对上述通用的配置主要放在用户里，针对不同项目的不同配置则需要放入工作区进行处理。
+> **温馨提示**：VS Code 的配置分为两种类型（用户和工作区），针对上述通用的配置主要放在用户里，针对不同项目的不同配置则可以放入工作区进行处理。
 
-除此之外，需要在构建前进行 ESLint 校验，一旦 ESLint 校验不通过则不允许进行源码的构建操作：
+#### ESLint 确保构建
+
+VS Code 插件并不能确保代码上传或构建前无任何错误信息，此时仍然需要额外的流程能够避免错误。在构建前进行 ESLint 校验能够确保构建时无任何错误信息，一旦 ESLint 校验不通过则不允许进行源码的构建操作：
 
 ```javascript
 "scripts": {
@@ -345,13 +354,13 @@ dist
 }
 ```
 
-需要注意在构建时需要进行校验的严格控制，一旦 lint 抛出 warning 或者 error 则立马终止构建（详情可查看 [ESLint 退出代码](https://cn.eslint.org/docs/user-guide/command-line-interface#exit-codes)）。
+需要注意在构建时进行校验的严格控制，一旦 lint 抛出 warning 或者 error 则立马终止构建（详情可查看 [ESLint 退出代码](https://cn.eslint.org/docs/user-guide/command-line-interface#exit-codes)）。
 
-> 温馨提示：需要注意 Shell 中的 `&&` 和 `&` 是有差异的，`&&` 主要用于继发执行，只有前一个任务执行成功，才会执行下一个任务，`&` 主要用于并发执行，表示两个脚本同时执行。这里构建的命令需要等待 `lint` 命令执行通过才能进行，一旦 `lint` 失败那么构建命令将不再执行。
+> **温馨提示**：需要注意 Shell 中的 `&&` 和 `&` 是有差异的，`&&` 主要用于继发执行，只有前一个任务执行成功，才会执行下一个任务，`&` 主要用于并发执行，表示两个脚本同时执行。这里构建的命令需要等待 `lint` 命令执行通过才能进行，一旦 `lint` 失败那么构建命令将不再执行。
 
-#### ESLint Pre-Commit Hook
+#### ESLint 确保代码上传
 
-尽管可能配置了 ESLint 的校验脚本 以及 VS Code 插件，但是有些 ESLint 的规则校验是无法通过 Save Auto Fix 的（例如质量规则），因此还需要一层保障能够确保代码提交之前所有的代码能够 ESLint 校验，这个配置将在 Lint Staged 中讲解。
+尽管可能配置了 ESLint 的校验脚本 以及 VS Code 插件，但是有些 ESLint 的规则校验是无法通过 Save Auto Fix 进行格式化修复的（例如质量规则），因此还需要一层保障能够确保代码提交之前所有的代码能够通过 ESLint 校验，这个配置将在 Lint Staged 中进行讲解。
 
 ### Prettier
 
@@ -359,14 +368,14 @@ dist
 
 Prettier 是一个统一代码格式风格的工具，如果你不清楚为什么需要使用 Prettier，可以查看 [Why Prettier?](https://prettier.io/docs/en/why-prettier.html)。很多人可能疑惑，ESLint 已经能够规范我们的代码风格，为什么还需要 Prettier？在 [Prettier vs Linters](https://prettier.io/docs/en/comparison.html) 中详细说明了两者的区别，Linters 有两种类型的规则：
 
-- 格式规则（Formatting rules）：例如 [max-len](https://eslint.org/docs/rules/max-len)、[keyword-spacing](https://eslint.org/docs/rules/keyword-spacing)以及 [no-mixed-spaces-and-tabs](https://eslint.org/docs/rules/no-mixed-spaces-and-tabs) 等
+- 格式规则（Formatting rules）：例如 [max-len](https://eslint.org/docs/rules/max-len)、[keyword-spacing](https://eslint.org/docs/rules/keyword-spacing) 以及 [no-mixed-spaces-and-tabs](https://eslint.org/docs/rules/no-mixed-spaces-and-tabs) 等
 - 质量规则（Code-quality rules）：例如 [no-unused-vars](https://eslint.org/docs/rules/no-unused-vars)、[no-implicit-globals](https://eslint.org/docs/rules/no-implicit-globals) 以及 [prefer-promise-reject-errors](https://eslint.org/docs/rules/prefer-promise-reject-errors) 等
 
-ESLint 的规则校验同时包含了 **格式规则** 和 **质量规则**，但是需要注意的是大部分情况下只有 **格式规则** 可以通过 `--fix` 或 VS Code 插件的 Sava Auto Fix 功能一键修复，而 **质量规则** 更多的是发现代码的 Bug 防止代码出错，往往需要手动修复。因此 **格式规则** 并不是必须的，而 **质量规则** 则是必须的。Prettier 与 ESLint 的区别在于 Prettier 专注于统一的**格式规则**，从而减轻 ESLint 在**格式规则上**的校验，而对于**质量规则** 则交给专业的 ESLint 进行处理。总结一句话就是：Prettier for formatting and linters for catching bugs!（ESLint 是必须的，Prettier 是可选的！）
+ESLint 的规则校验同时包含了 **格式规则** 和 **质量规则**，但是大部分情况下只有 **格式规则** 可以通过 `--fix` 或 VS Code 插件的 Sava Auto Fix 功能一键修复，而 **质量规则** 更多的是发现代码可能出现的 Bug 从而防止代码出错，这类规则往往需要手动修复。因此 **格式规则** 并不是必须的，而 **质量规则** 则是必须的。Prettier 与 ESLint 的区别在于 Prettier 专注于统一的**格式规则**，从而减轻 ESLint 在**格式规则上**的校验，而对于**质量规则** 则交给专业的 ESLint 进行处理。总结一句话就是：Prettier for formatting and linters for catching bugs!（ESLint 是必须的，Prettier 是可选的！）
 
-需要注意如果 ESLint（TSLint） 和 Prettier 配合使用时**格式规则**有重复且产生了冲突，那么在编辑器中使用 Sava Auto Fix 时会让你的一键格式化哭笑不得。此时应该让两者把各自注重的规则功能区分开，使用 ESLint 校验**质量规则**，而**格式规则**则交给 Prettier 进行处理，更多信息可查看[Integrating with Linters](https://prettier.io/docs/en/integrating-with-linters.html)。
+需要注意如果 ESLint（TSLint） 和 Prettier 配合使用时**格式规则**有重复且产生了冲突，那么在编辑器中使用 Sava Auto Fix 时会让你的一键格式化哭笑不得。此时应该让两者把各自注重的规则功能区分开，使用 ESLint 校验**质量规则**，使用 Prettier 校验**格式规则**，更多信息可查看 [Integrating with Linters](https://prettier.io/docs/en/integrating-with-linters.html)。
 
-> 温馨提示：在 VS Code 中使用 ESLint 匹配到相应的规则时会产生黄色波浪线提醒以及红色文件名提醒。Prettier 更希望你对格式规则无感知，从而不会让你觉得有任何使用的负担。如果想要了解更多 Prettier，还可以查看 Prettier 的背后思想 [Option Philosophy](https://prettier.io/docs/en/option-philosophy.html)，个人认为了解一个产品设计的**哲学**能更好的指导你使用该产品。
+> **温馨提示**：在 VS Code 中使用 ESLint 匹配到相应的规则时会产生黄色波浪线以及红色文件名进行错误提醒。Prettier 更希望你对格式规则无感知，从而不会让你觉得有任何使用的负担。如果想要了解更多 Prettier，还可以查看 Prettier 的背后思想 [Option Philosophy](https://prettier.io/docs/en/option-philosophy.html)，个人认为了解一个产品设计的**哲学**能更好的指导你使用该产品。
 
 #### Prettier 配置
 
@@ -378,9 +387,9 @@ npm i  prettier eslint-config-prettier --save-dev
 
 其中：
 
-- `[eslint-config-prettier](https://github.com/prettier/eslint-config-prettier)`: 用于解决 ESLint 和 Prettier 配合使用时容易产生的**格式规则**冲突问题，其作用就是关闭 ESLint 中配置的一些格式规则，除此之外还包括关闭 `@typescript-eslint/eslint-plugin`、`eslint-plugin-babel`、`eslint-plugin-react`、`eslint-plugin-vue`、`eslint-plugin-standard` 等格式规则。
+- [eslint-config-prettier](https://github.com/prettier/eslint-config-prettier): 用于解决 ESLint 和 Prettier 配合使用时容易产生的**格式规则**冲突问题，其作用就是关闭 ESLint 中配置的一些格式规则，除此之外还包括关闭 `@typescript-eslint/eslint-plugin`、`eslint-plugin-babel`、`eslint-plugin-react`、`eslint-plugin-vue`、`eslint-plugin-standard` 等格式规则。
 
-理论上而言，在项目中开启了 ESLint 的 `extends` 中设置了带有格式规则校验的规则集，那么就需要通过 `eslint-config-prettier` 插件关闭可能产生冲突的相对应的格式规则：
+理论上而言，在项目中开启 ESLint 的 `extends` 中设置的带有格式规则校验的规则集，那么就需要通过 `eslint-config-prettier` 插件关闭可能产生冲突的格式规则：
 
 ```javascript
 {
@@ -436,7 +445,7 @@ export default {
 };
 ```
 
-需要注意如果某些规则集没有对应的 `eslint-config-prettier` 关闭配置，那么可以先通过 [CLI helper tool](https://github.com/prettier/eslint-config-prettier#cli-helper-tool) 检测是否有重复的格式规则集在生效，然后可以通过手动配置 `eslintrc.js` 的形式进行关闭（例如本项目中配置的 `plugin:jest/recommended` 可能存在规则冲突）：
+需要注意如果某些规则集没有对应的 `eslint-config-prettier` 关闭配置，那么可以先通过 [CLI helper tool](https://github.com/prettier/eslint-config-prettier#cli-helper-tool) 检测是否有重复的格式规则集在生效，然后可以通过手动配置 `eslintrc.js` 的形式进行关闭：
 
 ```javascript
 PS C:\Code\Git\algorithms> npx eslint --print-config src/index.ts | npx eslint-config-prettier-check
@@ -458,17 +467,17 @@ https://github.com/prettier/eslint-config-prettier#special-rules
 - no-unexpected-multiline
 ```
 
-此时假设 `eslint-config-prettier` 没有类似的关闭格式规则集，那么可以通过配置 `.eslintrc.js` 的形式自己关闭相应冲突的格式规则。
+此时假设 `eslint-config-prettier` 没有类似的关闭格式规则集（例如本项目中配置的 `plugin:jest/recommended` 可能存在规则冲突），那么可以通过配置 `.eslintrc.js` 的形式自己手动关闭相应冲突的格式规则。
 
-> 温馨提示：ESLint 可以对不同的文件支持不同的规则校验， 因此 `--print-config` 只能对应单个文件的冲突格式规则检查。 由于通常的项目是一套规则对应一整个项目，因此对于整个项目所有的规则只需要校验一个文件是否有格式规则冲突即可。
+> **温馨提示**：ESLint 可以对不同的文件支持不同的规则校验， 因此 `--print-config` 只能对应单个文件的冲突格式规则检查。 由于通常的项目是一套规则对应一整个项目，因此对于整个项目所有的规则只需要校验一个文件是否有格式规则冲突即可。
 
 #### Prettier 插件
 
-通过命令行接口 `--write` 的形式可以进行格式自动修复，但是类似 ESLint，我们更希望项目在实时编辑的时候可以通过保存就自动格式化代码（鬼知道 `--fix` 以及 `--write` 格式了什么文件，当然更希望通过肉眼的形式立即感知格式化），此时可以通过配置 VS Code 的 [Prettier - Code formatter](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) 插件进行 Save Auto Fix，具体的配置查看插件文档。
+通过命令行接口 `--write` 的形式可以进行格式自动修复，但是类似 ESLint，我们更希望项目在实时编辑时可以通过保存就能自动格式化代码（鬼知道 `--fix` 以及 `--write` 格式了什么文件，当然更希望通过肉眼的形式立即感知代码的格式化变化），此时可以通过配置 VS Code 的 [Prettier - Code formatter](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) 插件进行 Save Auto Fix，具体的配置查看插件文档。
 
-#### Prettier Pre-Commit Hook
+#### Prettier 确保代码上传
 
-和 ESLint 一样，尽管可能配置了 Prettier 的自动修复格式脚本 以及 VS Code 插件，但是无法确保格式遗漏的情况，因此还需要一层保障能够确保代码提交之前所有的代码能够进行 Prettier 格式化，这个配置将在 Lint Staged 中讲解，更多配置方案也可以查看 [Prettier - Pre-commit Hook](https://prettier.io/docs/en/precommit.html)。
+和 ESLint 一样，尽管可能配置了 Prettier 的自动修复格式脚本以及 VS Code 插件，但是无法确保格式遗漏的情况，因此还需要一层保障能够确保代码提交之前能够进行 Prettier 格式化，这个配置将在 Lint Staged 中讲解，更多配置方案也可以查看 [Prettier - Pre-commit Hook](https://prettier.io/docs/en/precommit.html)。
 
 ### Lint Staged
 
@@ -480,24 +489,24 @@ https://github.com/prettier/eslint-config-prettier#special-rules
 - ESLint 规则统一，防止不符合规范的代码提交
 - Prettier 自动格式化（类似的还包括 Style 样式格式等）
 - 代码稳定性提交，提交之前确保测试用例全部通过
-- 发送通知
+- 发送邮件通知
 - CI 集成（服务端钩子）
 
-Git Hook 的钩子非常多，但是在客户端钩子中个人最常用的钩子主要是以下两个：
+Git Hook 的钩子非常多，但是在客户端中可能常用的钩子是以下两个：
 
-- `pre-commit`：Git 中 `pre` 系列的钩子允许终止即将发生的 Git 操作（`post` 系列往往用作通知行为），`pre-commit` 钩子在键入提交信息（运行 `git commit` 或 `git cz`）前运行，主要用于检查当前即将被提交的代码快照，例如提交遗漏、测试用例以及代码等。该钩子如果以非零值退出则 Git 将放弃本次提交。当然你也可以通过配置命令行参数 `git commit --no-verify` 绕过钩子的运行。
-- `commit-msg`：该钩子在用户输入 Commit Message 后被调用，接收存有当前 **Commit Message** 信息的临时文件路径作为唯一参数，因此可以利用该钩子来核对 Commit Meesage 信息（在 Git Commit Message 中使用了该钩子对提交信息进行了是否符合 Angular 规范的校验）。该钩子和 `pre-commit` 类似，一旦以非零值退出则 Git 将放弃本次提交。
+- `pre-commit`：Git 中 `pre` 系列钩子允许终止即将发生的 Git 操作，而`post` 系列往往用作通知行为。`pre-commit` 钩子在键入提交信息（运行 `git commit` 或 `git cz`）前运行，主要用于检查当前即将被提交的代码快照，例如提交遗漏、测试用例以及代码等。该钩子如果以非零值退出则 Git 将放弃本次提交。当然你也可以通过配置命令行参数 `git commit --no-verify` 绕过钩子的运行。
+- `commit-msg`：该钩子在用户输入 Commit Message 后被调用，接收存有当前 **Commit Message** 信息的临时文件路径作为唯一参数，因此可以利用该钩子来核对 Commit Meesage 信息（在 Git Commit Message 中使用了该钩子对提交信息进行了是否符合 Angular 规范的校验）。该钩子和 `pre-commit` 类似，一旦以非零值退出 Git 将放弃本次提交。
 
-除了上述常用的客户端钩子，还有两个常用的服务端钩子（写这个文档的时候顺手学习了一波）：
+除了上述常用的客户端钩子，还有两个常用的服务端钩子：
 
-- `pre-receive`：该钩子会在远程仓库接收 `git push` 推送的代码时执行（注意不是本地仓库），该钩子会比 `pre-commit` 更加有约束力（总会有这样或那样的开发人员不喜欢提交代码时所做的一堆检测，他们可能会选择绕过这些钩子），`pre-receive` 钩子可用于接收代码时的强制规范校验，如果某个开发人员采用了绕过 `pre-commit` 钩子的方式提交了一堆 💩 一样的代码，那么通过设置该钩子可以拒绝代码提交。当然该钩子最常用的操作还是用于检查用于是否有权限推送代码、非快速向前合并等。
+- `pre-receive`：该钩子会在远程仓库接收 `git push` 推送的代码时执行（注意不是本地仓库），该钩子会比 `pre-commit` 更加有约束力（总会有这样或那样的开发人员不喜欢提交代码时所做的一堆检测，他们可能会选择绕过这些钩子）。`pre-receive` 钩子可用于接收代码时的强制规范校验，如果某个开发人员采用了绕过 `pre-commit` 钩子的方式提交了一堆 💩 一样的代码，那么通过设置该钩子可以拒绝代码提交。当然该钩子最常用的操作还是用于检查是否有权限推送代码、非快速向前合并等。
 - `post-receive`：该钩子在推送代码成功后执行，适合用于发送邮件通知或者触发 CI 。
 
-> 温馨提示：想了解更多 Git Hook 信息可以查看 [Git Hook 官方文档](https://git-scm.com/book/zh/v2/%E8%87%AA%E5%AE%9A%E4%B9%89-Git-Git-%E9%92%A9%E5%AD%90) 或 [Git 钩子：自定义你的工作流](https://github.com/geeeeeeeeek/git-recipes/wiki/5.4-Git-%E9%92%A9%E5%AD%90%EF%BC%9A%E8%87%AA%E5%AE%9A%E4%B9%89%E4%BD%A0%E7%9A%84%E5%B7%A5%E4%BD%9C%E6%B5%81)。
+> **温馨提示**：想了解更多 Git Hook 信息可以查看 [Git Hook 官方文档](https://git-scm.com/book/zh/v2/%E8%87%AA%E5%AE%9A%E4%B9%89-Git-Git-%E9%92%A9%E5%AD%90) 或 [Git 钩子：自定义你的工作流](https://github.com/geeeeeeeeek/git-recipes/wiki/5.4-Git-%E9%92%A9%E5%AD%90%EF%BC%9A%E8%87%AA%E5%AE%9A%E4%B9%89%E4%BD%A0%E7%9A%84%E5%B7%A5%E4%BD%9C%E6%B5%81)。
 
-需要注意初始化 Git 之后默认会在 `.git/hooks` 目录下生成所有 Git 钩子的 Shell 示例脚本，这些脚本是可以被定制化的。但是对于前端开发而言去更改这些示例脚本适配前端项目非常不友好（大多数前端开发同学压根不会设计 Shell 脚本，尽管这个对于制作工具是一件非常高效的事情），因此社区就出现了类似的增强工具，它们对外抛出的是简单的钩子配置（例如 [ghooks](https://github.com/ghooks-org/ghooks) 在 `package.json` 中只需要进行简单的[钩子属性配置](https://github.com/ghooks-org/ghooks#setup)），而在内部则通过替换 Git 钩子示例脚本的形式使得外部配置的钩子可以被执行，例如 `[husky](https://github.com/typicode/husky)`、`ghooks` 以及 `[pre-commit](https://github.com/pre-commit/pre-commit)`等。
+需要注意初始化 Git 之后默认会在 `.git/hooks` 目录下生成所有 Git 钩子的 Shell 示例脚本，这些脚本是可以被定制化的。对于前端开发而言去更改这些示例脚本适配前端项目非常不友好（大多数前端开发同学压根不会设计 Shell 脚本，尽管这个对于制作工具是一件非常高效的事情），因此社区就出现了类似的增强工具，它们对外抛出的是简单的钩子配置（例如 [ghooks](https://github.com/ghooks-org/ghooks) 在 `package.json` 中只需要进行简单的[钩子属性配置](https://github.com/ghooks-org/ghooks#setup)），而在内部则通过替换 Git 钩子示例脚本的形式使得外部配置的钩子可以被执行，例如 [husky](https://github.com/typicode/husky)、ghooks 以及 [pre-commit](https://github.com/pre-commit/pre-commit) 等。
 
-> 温馨提示： Git Hook 还可以定制脚本执行的语言环境，例如对于前端而言当然希望使用熟悉的 Node 进行脚本设计，此时可以通过在脚本文件的头部设置 `#! /usr/bin/env node` 将 Node 作为可执行文件的环境解释器，如果你之前看过 [使用 NPM 发布和使用 CLI 工具](https://juejin.im/post/5eb89053e51d454de54db501) 可能会对这个环境解析器相对熟悉，这里也给出一个使用 Node 解释器的示例：[ghooks - hook.template.raw](https://github.com/ghooks-org/ghooks/blob/master/lib/hook.template.raw)，ghooks 的实现非常简单，感兴趣的同学可以仔细阅读一些源码的实现。
+> **温馨提示**： Git Hook 还可以定制脚本执行的语言环境，例如对于前端而言当然希望使用熟悉的 Node 进行脚本设计，此时可以通过在脚本文件的头部设置 `#! /usr/bin/env node` 将 Node 作为可执行文件的环境解释器，如果你之前看过 [使用 NPM 发布和使用 CLI 工具](https://juejin.im/post/5eb89053e51d454de54db501) 可能会对这个环境解析器相对熟悉，这里也给出一个使用 Node 解释器的示例：[ghooks - hook.template.raw](https://github.com/ghooks-org/ghooks/blob/master/lib/hook.template.raw)，ghooks 的实现非常简单，感兴趣的同学可以仔细阅读一些源码的实现。
 
 介绍 Git Hook 是为了让大家清晰的认知到使用 Hook 可以在前端的工程化项目中做很多事情（本来应该放在 Git Commit Message 中介绍相对合适，但是鉴于那个小节引用了另外一篇文章，因此将这个信息放在本小节进行科普）。
 
@@ -573,7 +582,7 @@ C:\Code\Git\algorithms\src\greet.ts
 husky > pre-commit hook failed (add --no-verify to bypass)
 ```
 
-husky 在 `package.json` 中配置了 `pre-commit` 和 `commit-msg` 两个 [Git 钩子](https://git-scm.com/book/en/v2/Customizing-Git-Git-Hooks)，优先执行 `pre-commit` 钩子执行 ESLint 校验，如果校验失败则终止运行，如果校验成功则会继续执行 `commit-msg` 校验 Git Commit Message，例如以下是 ESLint 校验通过但是 Commit Message 校验失败的例子：
+husky 在 `package.json` 中配置了 `pre-commit` 和 `commit-msg` 两个 [Git 钩子](https://git-scm.com/book/en/v2/Customizing-Git-Git-Hooks)，优先使用 `pre-commit` 钩子执行 ESLint 校验，如果校验失败则终止运行。如果校验成功则会继续执行 `commit-msg` 校验 Git Commit Message，例如以下是 ESLint 校验通过但是 Commit Message 校验失败的例子：
 
 ```javascript
 PS C:\Code\Git\algorithms> git commit -m "这是一个不符合规范的 Commit Message"
@@ -619,25 +628,25 @@ husky > commit-msg hook failed (add --no-verify to bypass)
 - [javascript-testing-best-practices](https://github.com/goldbergyoni/javascript-testing-best-practices/blob/master/readme-zh-CN.md)
 - [ui-testing-best-practices](https://github.com/NoriSte/ui-testing-best-practices)
 
-由于这里只是一个简单的 Node 环境的工具库包的单元测试，在对比了各个测试框架之后决定采用 Jest 进行单元测试：
+由于这里只是 Node 环境工具库包的单元测试，在对比了各个测试框架之后决定采用 [Jest](https://jestjs.io/) 进行单元测试：
 
-- 内置断言库可实现开箱即用（从 it 到 expect， Jest 将整个工具包放在一个地方）
-- Jest 可以可靠地并行运行测试，并且为了让加速测试进程，Jest 会先运行先前失败的测试
+- 内置断言库可实现开箱即用（从 `it` 到 `expect`， Jest 将整个工具包放在一个地方）
+- Jest 可以可靠地并行运行测试，并且为了让加速测试进程，Jest 会优先运行之前失败的测试用例
 - 内置覆盖率报告，无需额外进行配置
 - 优秀的报错信息
 
-> 温馨提示：前端测试框架很多，相比简单的 Node 环境测试，e2e 测试会更复杂一些（不管是测试框架的支持以及测试用例的设计），个人使用过 Karma 测试管理工具配合 Mocha 进行浏览器环境测试，也使用过 PhantomJS 以及 Nightwatch（使用的都是皮毛），印象最深刻的是使用 [testcafe](https://github.com/DevExpress/testcafe) 测试框架（复杂的 API 官方文档），除此之外如果还感兴趣，也可以了解一下 [cypress](https://github.com/cypress-io/cypress) 测试框架。
+> **温馨提示**：前端测试框架很多，相比简单的单元测试，e2e 测试会更复杂一些（不管是测试框架的支持以及测试用例的设计）。之前使用过 Karma 测试管理工具配合 Mocha 进行浏览器环境测试，也使用过 PhantomJS 以及 Nightwatch（使用的都是皮毛），印象最深刻的是使用 [testcafe](https://github.com/DevExpress/testcafe) 测试框架（复杂的 API 官方文档），除此之外如果还感兴趣，也可以了解一下 [cypress](https://github.com/cypress-io/cypress) 测试框架。
 
 #### Jest 配置
 
-本项目的单元测试主要采用了 [Jest](https://jestjs.io/en/) 测试框架，需要注意 Jest 如果需要对 TypeScript 进行支持，可以通过配合 Babel 的形式，具体可查看 [Jest - Using TypeScript](https://jestjs.io/docs/en/getting-started#using-typescript)，当然这会产生一些限制（具体可查看 [Babel 7 or TypeScript](https://kulshekhar.github.io/ts-jest/user/babel7-or-ts)）。由于本项目没有采用 Babel 进行转译，并且希望能够完美支持类型检查，因此采用 [ts-jest](https://kulshekhar.github.io/ts-jest/user/install#customizing) 进行单元测试。按照官方教程进行依赖安装和项目初始化：
+本项目的单元测试主要采用了 [Jest](https://jestjs.io/en/) 测试框架。Jest 如果需要对 TypeScript 进行支持，可以通过配合 Babel 的形式，具体可查看 [Jest - Using TypeScript](https://jestjs.io/docs/en/getting-started#using-typescript)，但是采用 Babel 会产生一些限制（具体可查看 [Babel 7 or TypeScript](https://kulshekhar.github.io/ts-jest/user/babel7-or-ts)）。由于本项目没有采用 Babel 进行转译，并且希望能够完美支持类型检查，因此采用 [ts-jest](https://kulshekhar.github.io/ts-jest/user/install#customizing) 进行单元测试。按照官方教程进行依赖安装和项目初始化：
 
 ```javascript
 npm install --save-dev jest typescript ts-jest @types/jest
 npx ts-jest config:init
 ```
 
-对根目录的 `ject.config.js` 进行配置修改（注释部分是新增的配置，后续配置可能还会增加）：
+子啊根目录的 `ject.config.js` 文件中进行 Jest 配置修改：
 
 ```javascript
 module.exports = {
@@ -677,10 +686,10 @@ module.exports = {
 
 需要注意 Jest 中的这些配置信息（更多配置信息可查看 [Jest CLI Options](https://jestjs.io/docs/zh-Hans/cli)）：
 
-- `bail` 的配置作用相对类似于 ESLint 中的 `max-warnings`，设置为 `true` 则表明一旦发现单元测试用例错误则停止运行其余测试用例，从而可以防止运行用例过多时需要一直等待用例全部运行完毕。
-- `coverage` 主要用于在当前根目录下生成 `coverage` 测试目录报告。
+- `bail` 的配置作用相对类似于 ESLint 中的 `max-warnings`，设置为 `true` 则表明一旦发现单元测试用例错误则停止运行其余测试用例，从而可以防止运行用例过多时需要一直等待用例全部运行完毕的情况。
+- `coverage` 主要用于在当前根目录下生成 `coverage` 代码的测试覆盖率报告，该报告还可以上传 [coveralls](https://coveralls.io/) 进行 Github 项目的 Badges 显示。
 
-> 温馨提示：Jest CLI Options 中的 `findRelatedTests` 可用于配合 `pre-commit` 钩子去运行最少量的单元测试用例，可配合 `lint-staged` 实现类似于 ESLint 的作用，更多细节可查看 [`lint-staged - Use environment variables with linting commands`](https://github.com/okonet/lint-staged#use-environment-variables-with-linting-commands)。
+> **温馨提示**：Jest CLI Options 中的 `findRelatedTests` 可用于配合 `pre-commit` 钩子去运行最少量的单元测试用例，可配合 `lint-staged` 实现类似于 ESLint 的作用，更多细节可查看 [`lint-staged - Use environment variables with linting commands`](https://github.com/okonet/lint-staged#use-environment-variables-with-linting-commands)。
 
 在当前根目录的 `test` 目录下新建 `greet.spec.ts` 文件，并设计以下测试代码：
 
@@ -694,9 +703,11 @@ describe("src/greet.ts", () => {
 });
 ```
 
-> 温馨提示：测试文件有两种放置风格，一种是新建 `test` 文件夹，然后将所有的测试代码集中在 `test` 目录下进行管理，另外一种是在各个源码文件的同级目录下新建 `__test__` 目录，进行就近测试，大部分的项目可能都会倾向采用第一种目录结构（可以随便找一些 github 上的开源项目进行查看，这里 `ts-test` 则是采用了第二种测试结构）。除此之外，需要注意的一点是 Jest 通过配置 [`testMatch`](https://jestjs.io/docs/zh-Hans/configuration#testmatch-arraystring) 或 [`testRegex`](https://jestjs.io/docs/zh-Hans/configuration#testregex-string--arraystring) 可以使得项目识别特定格式文件作为测试文件进行运行（本项目采用默认配置可识别后缀为 `.spec` 的文件进行单元测试）。
+> **温馨提示**：测试文件有两种放置风格，一种是新建 `test` 文件夹，然后将所有的测试代码集中在 `test` 目录下进行管理，另外一种是在各个源码文件的同级目录下新建 `__test__` 目录，进行就近测试。大部分的项目可能都会倾向于采用第一种目录结构（可以随便找一些 github 上的开源项目进行查看，这里 `ts-test` 则是采用了第二种测试结构）。除此之外，需要注意 Jest 通过配置 [`testMatch`](https://jestjs.io/docs/zh-Hans/configuration#testmatch-arraystring) 或 [`testRegex`](https://jestjs.io/docs/zh-Hans/configuration#testregex-string--arraystring) 可以使得项目识别特定格式文件作为测试文件进行运行（本项目采用默认配置可识别后缀为 `.spec` 的文件进行单元测试）。
 
-此时可单独通过执行 `npm run test` 命令进行单元测试，这里演示执行构建命令时的单元测试（需要保证构建之前所有的单元测试用例都能通过）。如果测试失败，那么应该防止继续构建，例如进行失败的构建行为：
+#### Jest 确保构建
+
+单独通过执行 `npm run test` 命令进行单元测试，这里演示执行构建命令时的单元测试（需要保证构建之前所有的单元测试用例都能通过）。如果测试失败，那么应该防止继续构建，例如进行失败的构建行为：
 
 ```javascript
 PS C:\Code\Git\algorithms> npm run build
@@ -764,9 +775,11 @@ npm ERR! A complete log of this run can be found in:
 npm ERR!     C:\Users\子弈\AppData\Roaming\npm-cache\_logs\2020-07-12T13_42_11_673Z-debug.log
 ```
 
-需要注意由于是并行（`&&`）执行脚本，因此执行构建命令时（`npm run build`）会先执行 ESLint 校验，如果 ESLint 校验失败那么退出构建，否则继续进行 Jest 单元测试，如果单元测试失败那么退出构建，只有当两者都通过时才会进行源码构建。
+需要注意由于是并行（`&&`）执行脚本，因此执行构建命令时（`npm run build`）会先执行 ESLint 校验，如果 ESLint 校验失败那么退出构建，否则继续进行 Jest 单元测试。如果单元测试失败那么退出构建，只有当两者都通过时才会进行源码构建。
 
-同时除了预防不负责任的构建以外，还需要预防不负责任的代码提交，此时配合 `lint-staged` 可以防止未跑通单元测试的代码进行远程提交：
+#### Jest 确保代码上传
+
+除了预防不负责任的代码构建以外，还需要预防不负责任的代码提交。配合 `lint-staged` 可以防止未跑通单元测试的代码进行远程提交：
 
 ```javascript
 "scripts": {
@@ -781,7 +794,7 @@ npm ERR!     C:\Users\子弈\AppData\Roaming\npm-cache\_logs\2020-07-12T13_42_11
 }
 ```
 
-此时如果单元测试有误（不管是源码逻辑有问题还是单元测试用例本身设计有问题），都会停止代码提交：
+此时如果单元测试有误，都会停止代码提交：
 
 ```javascript
 husky > pre-commit (node v12.13.1)
@@ -861,9 +874,9 @@ husky > pre-commit hook failed (add --no-verify to bypass)
 git exited with error code 1
 ```
 
-> 温馨提示：想要了解更多关于 Jest 的生态可以查看 [awesome-jest](https://github.com/jest-community/awesome-jest)。
+> **温馨提示**：想要了解更多关于 Jest 的生态可以查看 [awesome-jest](https://github.com/jest-community/awesome-jest)。
 
-#### ESLint 支持
+#### Jest 对于 ESLint 支持
 
 `src` 目录下的源码通过配置 `@typescript-eslint/eslint-plugin` 可进行推荐规则的 ESLint 校验，为了使得 `test` 目录下的测试代码能够进行符合 Jest 推荐规则的 ESLint 校验，可以通过配置 [eslint-plugin-jest](https://github.com/jest-community/eslint-plugin-jest) 进行支持（`ts-jest` 项目就是采用了该插件进行 ESLint 校验，具体可查看配置文件 [`ts-jest/.eslintrc.js`](https://github.com/kulshekhar/ts-jest/blob/master/.eslintrc.js#L12)），这里仍然采用推荐的规则配置：
 
@@ -937,11 +950,11 @@ npm ERR!     C:\Users\子弈\AppData\Roaming\npm-cache\_logs\2020-07-13T02_25_12
 
 此时会发现 ESLint 抛出了相应的错误信息。需要注意采用此 ESLint 校验之后也会在 VS Code 中实时生成错误提示（相应的代码下会有红色波浪线，鼠标移入后会产生 Tooltip 提示该错误的相应规则信息，除此之外当前工程目录下对应的文件名也会变成红色），**此后的 Git 提交以及 Build 构建都会失败**！
 
-> 温馨提示：如果你希望 Jest 测试的代码需要一些格式规范，那么可以查看 [eslint-plugin-jest-formatting](https://github.com/dangreenisrael/eslint-plugin-jest-formatting) 插件。
+> **温馨提示**：如果你希望 Jest 测试的代码需要一些格式规范，那么可以查看 [eslint-plugin-jest-formatting](https://github.com/dangreenisrael/eslint-plugin-jest-formatting) 插件。
 
 ### Npm Script Hook
 
-不知道大家有没有发现，当你查看一个前端开源项目的时候第一时间找的是项目的描述文件 `package.json` 中的 `main`、`bin` 以及 `files` 等字段信息，除此之外如果还想深入了解项目的结构，应该还会查看 `scripts` 脚本字段信息用于了解项目的开发、构建、测试以及安装等流程。npm 的脚本功能非常强大，你可以利用脚本制作项目需要的任何流程工具。本文不会过多介绍 npm 脚本的功能，只是讲解一下其中用到的一个 [钩子](https://www.npmjs.cn/misc/scripts/#description) 功能。
+当你查看前端开源项目时第一时间可能会找 `package.json` 中的 `main`、`bin` 以及 `files` 等字段信息，除此之外如果还想深入了解项目的结构，可能还会查看 `scripts` 脚本字段信息用于了解项目的开发、构建、测试以及安装等流程。npm 的脚本功能非常强大，你可以利用脚本制作项目需要的任何流程工具。本文不会过多介绍 npm 脚本的功能，只是讲解一下其中用到的 [钩子](https://www.npmjs.cn/misc/scripts/#description) 功能。
 
 目前在本项目中使用的一些脚本命令如下（就目前而言脚本相对较少，定义还蛮清晰的）：
 
@@ -952,7 +965,7 @@ npm ERR!     C:\Users\子弈\AppData\Roaming\npm-cache\_logs\2020-07-13T02_25_12
 "changelog": "rimraf CHANGELOG.md && conventional-changelog -p angular -i CHANGELOG.md -s"
 ```
 
-我们重点看下 `build` 脚本命令，会发现这个脚本命令包含了大量的继发执行脚本，但真正和 `build` 相关的只有 `rimraf dist types && gulp` 这两个脚本。这里通过 npm 的脚本钩子 `pre` 和 `post` 将脚本的功能区分开，从而使脚本的语义更加清晰（当然脚本越来越多的时候也可能容易增加开发者的认知负担）。npm 除了指定一些特殊的脚本钩子以外（例如 `prepublish`、`postpublish`、`preinstall`、`postinstall`等），还可以对任意脚本增加 `pre` 和 `post` 钩子，这里通过自定义钩子将并发执行的脚本进行简化：
+重点看下 `build` 脚本命令，会发现这个脚本命令包含了大量的继发执行脚本，但真正和 `build` 相关的只有 `rimraf dist types && gulp` 这两个脚本。这里通过 npm 的脚本钩子 `pre` 和 `post` 将脚本的功能区分开，从而使脚本的语义更加清晰（当然脚本越来越多的时候也可能容易增加开发者的认知负担）。npm 除了指定一些特殊的脚本钩子以外（例如 `prepublish`、`postpublish`、`preinstall`、`postinstall`等），还可以对任意脚本增加 `pre` 和 `post` 钩子，这里通过自定义钩子将并发执行的脚本进行简化：
 
 ```javascript
 "lint": "eslint src test --max-warnings 0",
@@ -970,15 +983,17 @@ npm run prebuild && npm run build
 
 之后设计的脚本如果继发执行繁多，那么都会采用 npm scripts hook 进行设计。
 
-> 温馨提示：大家可能会奇怪什么地方需要类似于 `preinstall` 或 `preuninstall` 这样的钩子，举个例子。例如查看 [husky - package.json](https://github.com/typicode/husky/blob/master/package.json)，husky 在安装的时候因为要植入 Git Hook 脚本从而带来了一些副作用（此时当然可以通过 `preinstall` 触发 Git Hook 脚本植入的逻辑）。如果不想使用 husky，那么卸载后需要清除植入的脚本从而不妨碍原有的 Git Hook 功能。 当然如果想要了解更多关于 npm 脚本的信息，可以查看 [npm-scripts](https://www.npmjs.cn/misc/scripts/) 或 [npm scripts 使用指南](http://www.ruanyifeng.com/blog/2016/10/npm_scripts.html?utm_source=tuicool&utm_medium=referral)。
+> **温馨提示**：大家可能会奇怪什么地方需要类似于 `preinstall` 或 `preuninstall` 这样的钩子，例如查看 [husky - package.json](https://github.com/typicode/husky/blob/master/package.json)，husky 在安装的时候因为要植入 Git Hook 脚本从而带来了一些副作用（此时当然可以通过 `preinstall` 触发 Git Hook 脚本植入的逻辑）。如果不想使用 husky，那么卸载后需要清除植入的脚本从而不妨碍原有的 Git Hook 功能。 当然如果想要了解更多关于 npm 脚本的信息，可以查看 [npm-scripts](https://www.npmjs.cn/misc/scripts/) 或 [npm scripts 使用指南](http://www.ruanyifeng.com/blog/2016/10/npm_scripts.html?utm_source=tuicool&utm_medium=referral)。
 
 ### Vuepress
 
 #### Vuepress 背景
 
-一般组件库或工具库都需要设计一个演示文档（提供良好的开发体验）。一般的工具库可以采用 [tsdoc](https://github.com/Microsoft/tsdoc)、[jsdoc](https://github.com/jsdoc/jsdoc) 或 [esdoc](https://github.com/esdoc/esdoc) 等工具进行 API 文档的自动生成（往往需要符合一些注释规范，这些注释规范在某种程度上可能会带来开发负担，当然也可以交给 VS Code 的插件进行一键生成，例如 [Document This For jsdoc](https://marketplace.visualstudio.com/items?itemName=joelday.docthis) 或 [TSDoc Comment](https://marketplace.visualstudio.com/items?itemName=kingsimba.tsdoc-comment)）。除此之外，组件库 Element UI 采用 `[vue-markdown-loader](https://github.com/QingWei-Li/vue-markdown-loader#with-vue-cli-3)(Convert Markdown file to Vue Component using markdown-it)`进行组件的 Demo 演示设计，但是配置相对复杂，更简单的方式当然是配合 [Vuepress](https://www.vuepress.cn/) 进行设计（如果你对 Vue 非常熟悉），它的功能非常强大，可以在 Markdown 中使用 Vue 语法。当然如果是 React 组件库的 Demo 演示，则可以采用 [dumi](https://d.umijs.org/guide) 生成组件 Demo 演示文档（不知道没有更加好用的类 Vuepress 的 React 组件文档生成器， 更多和 React 文档相关也可以了解 `[react-markdown](https://github.com/rexxars/react-markdown#readme)`、[react-static](https://github.com/react-static/react-static)等）。
+一般组件库或工具库都需要设计一个演示文档（提供良好的开发体验）。一般的工具库可以采用 [tsdoc](https://github.com/Microsoft/tsdoc)、[jsdoc](https://github.com/jsdoc/jsdoc) 或 [esdoc](https://github.com/esdoc/esdoc) 等工具进行 API 文档的自动生成，但往往需要符合一些注释规范，这些注释规范在某种程度上可能会带来开发负担，当然也可以交给 VS Code 的插件进行一键生成，例如 [Document This For jsdoc](https://marketplace.visualstudio.com/items?itemName=joelday.docthis) 或 [TSDoc Comment](https://marketplace.visualstudio.com/items?itemName=kingsimba.tsdoc-comment)。
 
-由于之前采用过 Vuepress 设计 Vue 组件库的 Demo 演示文档，对 Vuepress 相对较熟悉。因此这里仍然沿用它来设计工具库包的 API 文档（如果你想自动生成 API 文档，也可以额外配合 tsdoc 工具）。采用 Vuepress 设计文档的主要特点如下：
+组件库 Element UI 采用 [vue-markdown-loader](https://github.com/QingWei-Li/vue-markdown-loader#with-vue-cli-3)(Convert Markdown file to Vue Component using markdown-it) 进行组件的 Demo 演示设计，但是配置相对复杂。更简单的方式是配合 [Vuepress](https://www.vuepress.cn/) 进行设计，它的功能非常强大，但前提是熟悉 Vue，因为可以在 Markdown 中使用 Vue 语法。当然如果是 React 组件库的 Demo 演示，则可以采用 [dumi](https://d.umijs.org/guide) 生成组件 Demo 演示文档（不知道没有更加好用的类 Vuepress 的 React 组件文档生成器， 更多和 React 文档相关也可以了解 [react-markdown](https://github.com/rexxars/react-markdown#readme)、[react-static](https://github.com/react-static/react-static) 等）。
+
+由于之前采用过 Vuepress 设计 Vue 组件库的 Demo 演示文档，因此这里仍然沿用它来设计工具库包的 API 文档（如果你想自动生成 API 文档，也可以额外配合 tsdoc 工具）。采用 Vuepress 设计文档的主要特点如下：
 
 - 可以在 Markdown 中直接使用 Vue（还可以自定义 Vue 文档视图组件）
 - 内置了很多 Markdown 拓展
@@ -987,11 +1002,9 @@ npm run prebuild && npm run build
 - 可以安装 Vuepress 插件（后续需要支持的 [Latex](https://www.latex-project.org/) 排版就可以利用现有的插件能力生成）
 - 默认响应式
 
-> 温馨提示：希望有更好的类似于 dumi 的 React 文档生成工具，希望可以在评论区告知。
-
 #### Vuepress 配置
 
-先按照官方文档的 [快速上手](https://www.vuepress.cn/guide/getting-started.html#%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B) 文档进行依赖安装和 npm scripts 脚本设置：
+先按照官方的 [快速上手](https://www.vuepress.cn/guide/getting-started.html#%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B) 文档进行依赖安装和 npm scripts 脚本设置：
 
 ```javascript
 "scripts": {
@@ -1000,7 +1013,7 @@ npm run prebuild && npm run build
 }
 ```
 
-按照 Vuepress 官网**约定优于配置**的原则进行演示文档[目录结构](https://www.vuepress.cn/guide/directory-structure.html)设计，官方的文档可能一下子难以理解，可以先设计一个最简单的目录：
+按照 Vuepress 官网**约定优于配置**的原则进行演示文档的[目录结构](https://www.vuepress.cn/guide/directory-structure.html)设计，官方的文档可能一下子难以理解，可以先设计一个最简单的目录：
 
 ```javascript
 .
@@ -1010,8 +1023,6 @@ npm run prebuild && npm run build
 │   └── README.md           # 文档首页
 └── package.json
 ```
-
-首先设置当前
 
 根据[默认主题 / 首页](https://www.vuepress.cn/theme/default-theme-config.html#%E9%A6%96%E9%A1%B5)在 `docs/README.md` 进行首页设计：
 
@@ -1034,7 +1045,7 @@ footer: MIT Licensed | Copyright © 2020-present 子弈
 ---
 ```
 
-根据 [配置](https://www.vuepress.cn/config/#%E9%85%8D%E7%BD%AE) 对 `docs/.vuepress/config.js` 文件进行基本配置：
+根据[配置](https://www.vuepress.cn/config/#%E9%85%8D%E7%BD%AE) 对 `docs/.vuepress/config.js` 文件进行基本配置：
 
 ```javascript
 const packageJson = require("../../package.json");
@@ -1051,7 +1062,7 @@ module.exports = {
 };
 ```
 
-此时通过设置的 `npm run docs:dev` 进行开发态文档预览：
+此时通过 `npm run docs:dev` 进行开发态文档预览：
 
 ```javascript
 PS C:\Code\Git\algorithms> npm run docs:dev
@@ -1080,11 +1091,11 @@ success [23:13:14] Build 10b15a finished in 5311 ms!
 
 效果如下：
 
-![Home.png](https://raw.githubusercontent.com/ziyi2/algorithms/feat/framework/images/Home.png)
+![](https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/9097ed5468ba494db8bd74b7b607f0cf~tplv-k3u1fbpfcp-zoom-1.image)
 
 当然除了以上设计的首页，在本项目中还会设计[导航栏](https://www.vuepress.cn/theme/default-theme-config.html#%E5%AF%BC%E8%88%AA%E6%A0%8F)、[侧边栏](https://www.vuepress.cn/theme/default-theme-config.html#%E4%BE%A7%E8%BE%B9%E6%A0%8F)、使用[插件](https://www.vuepress.cn/plugin/)、[使用组件](https://www.vuepress.cn/guide/using-vue.html#%E4%BD%BF%E7%94%A8%E7%BB%84%E4%BB%B6)等。这里重点讲解一下 [Webpack 构建](https://www.vuepress.cn/config/#chainwebpack) 配置。
 
-为了在 Markdown 文档中可以使用 `src` 目录的 TypeScript 代码并进行 ESLint 报错提示，这里对 `.vuepress/config.js` 文件进行配置处理：
+为了在 Markdown 文档中可以使用 `src` 目录的 TypeScript 代码，这里对 `.vuepress/config.js` 文件进行配置处理：
 
 ```javascript
 const packageJson = require("../../package.json");
@@ -1141,9 +1152,9 @@ module.exports = {
 };
 ```
 
-> 温馨提示：这里的 Webpack 配置采用了 [webpack-chain](https://github.com/neutrinojs/webpack-chain) 的链式操作手法，如果想要采用常用的 Webpack 配置方式则可以查看 [Vuepress - 构建流程 - configurewebpack](https://www.vuepress.cn/config/#configurewebpack)。
+> **温馨提示**：这里的 Webpack 配置采用了 [webpack-chain](https://github.com/neutrinojs/webpack-chain) 链式操作，如果想要采用 Webpack 对象的配置方式则可以查看 [Vuepress - 构建流程 - configurewebpack](https://www.vuepress.cn/config/#configurewebpack)。
 
-此时可以在 Vuepress 的 Markdown 文档中进行演示文档设计：
+此时可以在 Vuepress 的 Markdown 文档中进行 TypeScript 引入的演示文档设计：
 
 ```javascript
 # Test vuepress
@@ -1176,29 +1187,31 @@ module.exports = {
 
 启动 Vuepress 查看演示文档：
 
-![VuePress Test.png](https://raw.githubusercontent.com/ziyi2/algorithms/feat/framework/images/VuePress%20Test.png)
+![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/9ebbac359cfd43f8be3f1bf3c114afce~tplv-k3u1fbpfcp-zoom-1.image)
 
-可以发现在 Markdown 中引入的 `src/greet.ts` 代码生效了。最终通过 `npm run docs:build` 可以生成演示文档的静态资源进行部署和访问。
+可以发现在 Markdown 中引入的 `src/greet.ts` 代码生效了，最终通过 `npm run docs:build` 可以生成演示文档的静态资源进行部署和访问。
 
-> 温馨提示：更多本项目的 Vuepress 配置信息可查看 Commit 信息，除此之外如果还想知道更多 Vuepress 的生态，例如有哪些有趣插件或主题，可查看 [awesome-vuepress](https://github.com/vuepressjs/awesome-vuepress) 或 [Vuepress 社区](https://vuepress.github.io/zh/)。
+> **温馨提示**：更多本项目的 Vuepress 配置信息可查看 Commit 信息，除此之外如果还想知道更多 Vuepress 的生态，例如有哪些有趣插件或主题，可查看 [awesome-vuepress](https://github.com/vuepressjs/awesome-vuepress) 或 [Vuepress 社区](https://vuepress.github.io/zh/)。
 
 #### 文档工具和规范
 
 通常在书写文档的时候很多同学都不注重文档的洁癖，其实书写文档和书写代码一样需要一些格式规范。[markdownlint](https://github.com/DavidAnson/markdownlint) 是类似于 ESLint 的 Markdown 格式校验工具，通过它可以更好的规范我们书写的文档。当然 Markdown 的格式校验不需要像 ESLint 或者 Prettier 校验那样进行强约束，简单的能够做到提示和 Save Auto Fix 即可。
 
-这里通过安装 Vs Code 插件 [markdownlint](https://marketplace.visualstudio.com/items?itemName=DavidAnson.vscode-markdownlint) 并进行 Save Auto Fix 配置（在插件中明确列出了哪些规则是可以被 Fix 的）。安装完成后查看刚刚进行的测试文件：
+通过安装 Vs Code 插件 [markdownlint](https://marketplace.visualstudio.com/items?itemName=DavidAnson.vscode-markdownlint) 并进行 Save Auto Fix 配置（在插件中明确列出了哪些规则是可以被 Fix 的）。安装完成后查看刚刚进行的测试文件：
 
-![Markdownlint.png](https://raw.githubusercontent.com/ziyi2/algorithms/feat/framework/images/Markdownlint.png)
+![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/ca3dab37867a4d6f9af0189819115514~tplv-k3u1fbpfcp-zoom-1.image)
 
 此时会发现插件生效了，但是在 Markdown 中插入 html 是必须的一个能力（Vuepress 支持的能力就是在 Markdown 中使用 Vue），因此可以通过 `.markdownlintrc` 文件将相应的规则屏蔽掉。
 
-> 温馨提示：如果你希望在代码提交之前或文档构建之前能够进行 Markdown 格式校验，则可以尝试它的命令行接口 [markdownlint-cli](https://github.com/igorshubovych/markdownlint-cli)。除此之外，如果对文档的设计没有想法或者不清楚如何书写好的技术文档，可以查看 [技术文章的写作技巧分享](https://juejin.im/post/5ecbdff6e51d45783e17a7a1)，一定能让你所收获。
+> **温馨提示**：如果你希望在代码提交之前或文档构建之前能够进行 Markdown 格式校验，则可以尝试它的命令行接口 [markdownlint-cli](https://github.com/igorshubovych/markdownlint-cli)。除此之外，如果对文档的设计没有想法或者不清楚如何书写好的技术文档，可以查看 [技术文章的写作技巧分享](https://juejin.im/post/5ecbdff6e51d45783e17a7a1)，一定能让你有所收获。
 
 ### Github Actions
 
 #### CI / CD 背景
 
-个人对于 CI / CD 可能相对不够熟悉（只是简单的玩过 Travis、Gitlab CI / CD 以及 Jenkins ），已经有很多讲解 CI / CD 的好文章，这里就不再过多介绍，有兴趣的同学可以看看以下一些好文：
+> 前提提示：个人对于 CI / CD 可能相对不够熟悉，只是简单的玩过 Travis、Gitlab CI / CD 以及 Jenkins。
+
+关于 CI / CD 的背景这里就不再过多介绍，有兴趣的同学可以看看以下一些好文：
 
 - [Introduction to CI/CD with GitLab（中文版）](https://s0docs0gitlab0com.icopy.site/ee/ci/introduction/index.html)
 - [GitHub Actions 入门教程](http://www.ruanyifeng.com/blog/2019/09/getting-started-with-github-actions.html)
@@ -1207,38 +1220,36 @@ module.exports = {
 
 在 [Introduction to CI/CD with GitLab（中文版）](https://s0docs0gitlab0com.icopy.site/ee/ci/introduction/index.html) 中你可以清晰的了解到 CI 和 CD 的职责功能：
 
-![CI&CD.png](https://raw.githubusercontent.com/ziyi2/algorithms/feat/framework/images/CI%26CD.png)
+![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/c857b6ba9c964299b7b231217ca42195~tplv-k3u1fbpfcp-zoom-1.image)
 
-每一个流程的细节，可发现 Gitlab 在每个阶段可用的功能：
+通过以下图可以更清晰的发现 Gitlab 在每个阶段可用的功能：
 
-![Deep CI&CD.png](https://raw.githubusercontent.com/ziyi2/algorithms/feat/framework/images/Deep%20CI%26CD.png)
+![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/d36f0a4b655d4b13ae163380d57e223d~tplv-k3u1fbpfcp-zoom-1.image)
 
-由于本项目依赖 Github，因此没法使用 Gitlab 默认集成的能力。之前的 Github 项目采用了 Travis （之前一直在抱怨 Github 没有 CI / CD 能力）进行项目的 CI / CD 集成，现在因为有了更方便的 Github Actions，因此决定采用 Github 自带的 Actions 进行 CI / CD 能力集成（大家如果想更多了解这些 CI / CD 的差异请自行 Google 哈）。Github Actions 所带来的好处在于：
+由于本项目依赖 Github，因此没法使用 Gitlab 默认集成的能力。之前的 Github 项目采用了 Travis 进行项目的 CI / CD 集成，现在因为有了更方便的 Github Actions，因此决定采用 Github 自带的 Actions 进行 CI / CD 能力集成（大家如果想更多了解这些 CI / CD 的差异请自行 Google 哈）。Github Actions 所带来的好处在于：
 
 - 可复用的 Actions（以前你需要写复杂的脚本，现在可以复用别人写好的脚本，可以简单理解为 CI 脚本插件化）
-- 支持更多的 [webhook](https://docs.github.com/en/actions/reference/events-that-trigger-workflows)
+- 支持更多的 [webhook](https://docs.github.com/en/actions/reference/events-that-trigger-workflows)，这些当然是 Github 生态特有的竞争力
 
-当然也会产生一些[限制](https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions#usage-limits)，这些限制主要都是和执行时间以及次数相关。需要注意类似于 Jenkins 等支持本地连接运行，Github Actions 也支持连接到本地机器运行 workflow，因此部分限制可能不受本地运行的限制。
+当然也会产生一些[限制](https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions#usage-limits)，这些限制主要是和执行时间以及次数相关。需要注意类似于 Jenkins 等支持本地连接运行，Github Actions 也支持连接到本地机器运行 workflow，因此部分限制可能不受本地运行的限制。
 
-本项目中使用到的 CI / CD 功能相对简单，如果想了解通用的 Actions，可查看 [官方 Actions](https://github.com/marketplace?type=actions) 和 [awesome-actions](https://github.com/sdras/awesome-actions)。
-
-> 温馨提示：最近在使用 Jenkins 做前端的自动化构建优化，后续可能会出一篇简单的教程文章（当然会跟普通讲解的用法会有所不同喽）。
+> **温馨提示**：本项目中使用到的 CI / CD 功能相对简单，如果想了解更多通用的 Actions，可查看 [官方 Actions](https://github.com/marketplace?type=actions) 和 [awesome-actions](https://github.com/sdras/awesome-actions)。最近在使用 Jenkins 做前端的自动化构建优化，后续可能会出一篇简单的教程文章（当然会跟普通讲解的用法会有所不同喽）。
 
 #### Github Actions 配置
 
-本项目的 CI 配置可能会包含三个方面：
+本项目的配置可能会包含以下三个方面：
 
-- 开发并更新静态资源站点流程
+- 自动更新静态资源流程
 - 发布库包流程
 - 提交 Pull Request 流程
 
-这里主要讲解开发并更新静态资源站点，大致需要分为以下几个步骤（以下都是在 Github 服务器上进行操作，你可以理解为新的容器环境）：
+这里主要讲解自动更新静态资源流程，大致需要分为以下几个步骤（以下都是在 Github 服务器上进行操作，你可以理解为新的服务环境）：
 
-- 拉取当前 Github 仓库并切换到相应的分支（默认 Git 就不需要安装啦）
+- 拉取当前 Github 仓库代码并切换到相应的分支
 - 安装 Node 和 Npm 环境
 - 安装项目的依赖
-- 构建库包和静态资源站点
-- 发布静态资源
+- 构建库包和演示文档的静态资源
+- 发布演示文档的静态资源
 
 通过查看 [官方 Actions](https://github.com/marketplace?type=actions) 和 [awesome-actions](https://github.com/sdras/awesome-actions)，找到所需的 Actions:
 
@@ -1247,7 +1258,7 @@ module.exports = {
 - [setup-node](https://github.com/actions/setup-node): 安装 Node 和 Npm 环境
 - [actions-gh-pages](https://github.com/peaceiris/actions-gh-pages): 在 Github 上发布静态资源
 
-> 温馨提示：可用的 Action 很多，这里只是设置了一个简单的流程。
+> **温馨提示**：可用的 Action 很多，这里只是设置了一个简单的流程。
 
 在 `.github/workflows` 下新增 `mian.yml` 配置文件：
 
@@ -1504,15 +1515,15 @@ jobs:
     # services: 使用 Docker 容器 Action 或者 服务 Action 必须使用 Linux 环境运行
 ```
 
-> 温馨提示：这里不再叙述具体的配置过程，更多可查看配置文件中贴出的链接信息。
+> **温馨提示**：这里不再叙述具体的配置过程，更多可查看配置文件中贴出的链接信息。
 
 上传 CI 的配置文件后，Github 就会进行自动构建，具体如下：
 
-![workflows.png](https://raw.githubusercontent.com/ziyi2/algorithms/feat/framework/images/Workflows.png)
+![](https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/92dbefc60fa948f6bcf46db5d73fbcb5~tplv-k3u1fbpfcp-zoom-1.image)
 
-正在构建或者构建完成后可查看每个构建的信息，如果初次构建失败则可以通过构建信息找出失败原因，并重新修改构建配置进行再次构建，每次构建失败 Github 都会通过邮件的形式进行通知：
+正在构建或者构建完成后可查看每个构建的信息，如果初次构建失败则可以通过构建信息找出失败原因，并重新修改构建配置尝试再次构建。除此之外，每次构建失败 Github 都会通过邮件的形式进行通知：
 
-![fail.png](https://raw.githubusercontent.com/ziyi2/algorithms/feat/framework/images/Fail.jpg)
+![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/b100ea8537f148df91c5f56214ee2ba5~tplv-k3u1fbpfcp-zoom-1.image)
 
 如果构建成功，则每次你推送新的代码后，Github 服务会进行一系列流程并自动更新静态资源站点。
 
@@ -1520,15 +1531,32 @@ jobs:
 
 希望大家看完这篇文档之后如果想使用其中某些工具能够养成以下一些习惯：
 
-- 通篇阅读工具对应的官方 Github README 文档以及官方站点文档（如果有站点文档），了解该工具设计的核心哲学、核心功能、解决什么核心问题。前端的工具百花齐放，同样的功能可能可以采用多种不同的工具实现，如果想要在项目中使用得当，就得知道这些工具的差异，就需要完整的阅读相应的官方文档，并考虑当前工具是否匹配你的项目环境。切忌大家在用什么你就用什么，需要有自己对于该工具使用的一些思考。比如之前在设计 UI 组件库的时候采用了 [Lerna](https://github.com/lerna/lerna)，但是当时并不明白它带来的一些弊端，一定需要考虑清楚在什么环境下使用它绝对合适！
-- 在完整调研了各个工具的差异之后，就可以开始选择认为合适的工具（不一定是最新的工具）开始实践，在实践的过程中你会对该工具的使用越来越熟悉。此时如果遇到一些问题或者想要实现某些功能，在通篇阅读文档的基础上会变得相对容易。当然如果遇到了一些报错信息无法解决，此时第一个动作应该是去搜索当前工具所对应的 Github Issues（切忌养成一来就搜索 Baidu Or Google 的习惯），如果没有搜索到相应的 Issues 你可以立马提一个新的 Issue，如果工具库的维护者发现重复的 Issue 他会指引你到相应的 Issue，如果这个问题确实是新发现的，那么很好，你给该工具做了一个很好的贡献。当然除此之外，你也可以根据错误的堆栈信息追踪工具的源码，了解源码之后可能你就清晰了错误信息产生的原因以及如何规避它。
-- 在完成以上两步之后，你就可以开始像我一样开始总结工具的使用技巧了，此时如果你重新阅读工具的官方文档，或许你会像我一样产生一些新的认知或思考。
+- 通篇阅读工具的文档，了解相同功能的不同工具的差异点
 
-## 文档
+通篇阅读工具对应的官方 Github README 文档以及官方站点文档，了解该工具设计的核心哲学、核心功能、解决什么核心问题。前端的工具百花齐放，同样的功能可能可以采用多种不同的工具实现。如果想要在项目中使用适当的工具，就得知道这些工具的差异。完整的阅读相应的官方文档，有助于你理解各自的核心功能和差异。
+
+- 在调研了各个工具的差异之后，选择认为合适的工具进行实践
+
+在实践的过程中你会对该工具的使用越来越熟悉。此时如果遇到一些问题或者想要实现某些功能，在通篇阅读文档的基础上会变得相对容易。当然如果遇到一些报错信息无法解决，此时第一时间应该是搜索当前工具所对应的 Github Issues。除此之外，你也可以根据错误的堆栈信息追踪工具的源码，了解源码之后可能会对错误信息产生的原因更加清晰。
+
+- 在完成以上两步之后，你应该总结工具的使用技巧啦，此时在此通读工具文档可能会产生不一样的收获
+
+## 链接文档
 
 - [使用 NPM 发布和使用 CLI 工具](https://juejin.im/post/5eb89053e51d454de54db501)
 - [Top 10 JavaScript errors from 1000+ projects (and how to avoid them)](https://rollbar.com/blog/top-10-javascript-errors/)
-- [Cz 工具集使用介绍](https://juejin.im/post/5cc4694a6fb9a03238106eb9)（强烈推荐阅读）
+- [前端构建：3 类 13 种热门工具的选型参考](https://segmentfault.com/a/1190000017183743)
+- [Cz 工具集使用介绍](https://juejin.im/post/5cc4694a6fb9a03238106eb9)
 - [ES modules: A cartoon deep-dive](https://hacks.mozilla.org/2018/03/es-modules-a-cartoon-deep-dive/)（强烈推荐阅读）
+- [JavaScript 程序测试](https://javascript.ruanyifeng.com/tool/testing.html)
+- [New to front-end testing? Start from the top of the pyramid!](https://dev.to/noriste/new-to-front-end-testing-start-from-the-top-of-the-pyramid-36kj)
 - [JavaScript & Node.js Testing Best Practices](https://github.com/goldbergyoni/javascript-testing-best-practices/blob/master/readme-zh-CN.md)
+- [[译] JavaScript 单元测试框架：Jasmine, Mocha, AVA, Tape 和 Jest 的比较](https://juejin.im/post/5acc721a6fb9a028b77b23c9)
+- [JavaScript unit testing frameworks in 2020: A comparison](https://raygun.com/blog/javascript-unit-testing-frameworks/)
+- [javascript-testing-best-practices](https://github.com/goldbergyoni/javascript-testing-best-practices/blob/master/readme-zh-CN.md)
+- [ui-testing-best-practices](https://github.com/NoriSte/ui-testing-best-practices)
+- [npm scripts 使用指南](http://www.ruanyifeng.com/blog/2016/10/npm_scripts.html?utm_source=tuicool&utm_medium=referral)
 - [技术文章的写作技巧分享](https://juejin.im/post/5ecbdff6e51d45783e17a7a1)
+- [Introduction to CI/CD with GitLab（中文版）](https://s0docs0gitlab0com.icopy.site/ee/ci/introduction/index.html)
+- [GitHub Actions 入门教程](http://www.ruanyifeng.com/blog/2019/09/getting-started-with-github-actions.html)
+- [当我有服务器时我做了什么 · 个人服务器运维指南](https://shanyue.tech/op/#%E9%A2%84%E8%A7%88)
