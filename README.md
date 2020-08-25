@@ -646,7 +646,7 @@ npm install --save-dev jest typescript ts-jest @types/jest
 npx ts-jest config:init
 ```
 
-子啊根目录的 `ject.config.js` 文件中进行 Jest 配置修改：
+在根目录的 `jest.config.js` 文件中进行 Jest 配置修改：
 
 ```javascript
 module.exports = {
